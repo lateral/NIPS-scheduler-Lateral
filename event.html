@@ -1,0 +1,26 @@
+<html>
+<h1>Event {{ id }}</h1>
+<span class="title">{{ meta['title'] }}</span>
+<ul class="author-list">
+	{% for author, author_id in zip(authors, author_ids) %}
+	<li>
+		<span class="author" id="author-{{author_id}}">{{ author }}</span>
+	</li>
+	{% end %}
+</ul>
+<span class="event_type">{{ meta['event_type'] }}</span>
+<span class="location">{{ meta['location'] }}</span>
+<span class="start_time">{{ meta['start_time'] }}</span>
+<span class="time_str">{{ meta['time_str'] }}</span>
+<span class="start_time_numeric">{{ meta['start_time_numeric'] }}</span>
+<span class="abstract">{{ meta['abstract_html'] }}</span>
+<a href="{{ meta['url'] }}">original</a>
+
+<h2>Related talks:</h2>
+<ol>
+	{% for card in related_cards %}
+	{% module Template("card.html", **card) %}
+	{% end %}
+</ol>
+
+</html>
