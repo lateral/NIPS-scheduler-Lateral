@@ -88,8 +88,8 @@ class EventsHandler(UserHandler):
         # get the user's schedule
         schedule_cards = self.get_schedule_cards(self.user_id)
         self.render('events.html',
-                    schedule_cards=schedule_cards,
                     event_cards=event_cards,
+                    schedule_cards=schedule_cards,
                     user_id=self.user_id)
 
 
@@ -106,7 +106,13 @@ class EventHandler(UserHandler):
         related_events = map(document_to_card, related_events)
         # fetch the similar arxiv papers, include them
         related_papers = self.get_related_papers(event['meta']['abstract_text'])
-        self.render('event.html', related_events=related_events, related_papers=related_papers, **event)
+        # get the user's schedule
+        schedule_cards = self.get_schedule_cards(self.user_id)
+        self.render('event.html',
+                    user_id=self.user_id,
+                    schedule_cards=schedule_cards,
+                    related_events=related_events,
+                    related_papers=related_papers, **event)
 
     def _respond_schedule(self):
         """

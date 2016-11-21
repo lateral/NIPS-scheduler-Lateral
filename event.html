@@ -1,4 +1,5 @@
-{% module Template("header.html", title="NIPS scheduler", scripts=[], stylesheets=[]) %}
+{% extends "main.html" %}
+{% block main_content %}
 <h1 class="title">{{ meta['title'] }}</h1>
 <ol class="author-list">
 	{% for author, author_id in zip(authors, author_ids) %}
@@ -35,5 +36,4 @@
 		{% end %}
 	</ol>
 </div>
-
-</html>
+{% end %}

@@ -1,0 +1,23 @@
+{% module Template("header.html", title="NIPS scheduler", scripts=['nips.js'], stylesheets=['nips.css']) %}
+<body>
+	<div>
+	<a href="/">Home</a>
+	</div>
+
+	<div id="wrapper">
+		<div id="left-panel">
+			<h1>Schedule</h1>
+			<div id="schedule">
+				{% module Template("schedule.html", user_id=user_id, cards=schedule_cards) %}
+			</div>
+			<div id="download-schedule">
+				<a href="/schedule/{{ user_id }}">Download</a>
+			</div>
+		</div>
+		<div id="right-panel">
+			{% block main_content %} {% end %}
+		</div>
+		<div class="cleared"></div>
+	</div>
+</body>
+</html>
