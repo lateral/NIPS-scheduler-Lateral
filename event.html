@@ -1,14 +1,20 @@
 {% extends "main.html" %}
 {% block main_content %}
 <h1 class="title">{{ meta['title'] }}</h1>
-<ol class="author-list">
-	{% for author, author_id in zip(authors, author_ids) %}
-	<li>
-		<a href="https://nips.cc/Conferences/2016/Schedule?showSpeaker={{ author_id }}">{{ author }}</a>
-	</li>
+<ol class="comma-list authors">
+	{% for author in meta['authors'].split(', ') %}
+	<li> {{ author }} </li>
 	{% end %}
 </ol>
 <br>
+
+<ol class="comma-list categories">
+	{% for tag in tags %}
+	<li> {{ tag['id'].replace('_', ' ') }} </li>
+	{% end %}
+</ol>
+<br>
+
 <span class="event_type">{{ meta['event_type'] }}</span>
 <span class="location">{{ meta['location'] }}</span>
 <span class="start_time">{{ meta['start_time'] }}</span>
@@ -24,7 +30,9 @@
 	<h2>Related talks:</h2>
 	<ol>
 		{% for card in related_events %}
-		{% module Template("card.html", **card) %}
+		<li>
+		{% module Template("event_result.html", **card) %}
+		</li>
 		{% end %}
 	</ol>
 </div>
@@ -33,7 +41,9 @@
 	<h2>Related arXiv papers:</h2>
 	<ol>
 		{% for paper in related_papers %}
-		{% module Template("arxiv_card.html", **paper) %}
+		<li>
+		{% module Template("arxiv_result.html", **paper) %}
+		</li>
 		{% end %}
 	</ol>
 </div>

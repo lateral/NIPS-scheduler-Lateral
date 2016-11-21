@@ -1,18 +1,18 @@
 body {
 	font-family: "Courier New", Courier, monospace;
 }
-ol.author-list {
+ol.comma-list {
 	display: inline;
 	padding: 0px;
 	margin: 0px;
 	list-style: none;
 }
-ol.author-list li {
+ol.comma-list li {
 	display: inline;
 }
-ol.author-list li:after {
+ol.comma-list li:after {
 	content: ", ";
 }
-ol.author-list li:last-child:after {
+ol.comma-list li:last-child:after {
 	content: "";
 }

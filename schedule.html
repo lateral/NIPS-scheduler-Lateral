@@ -1,6 +1,6 @@
 <span class="user-id">Cookie {{ user_id }}</span>
 <ol class="schedule">
 {% for card in cards %}
-{% module Template("card.html", **card) %}
+{% module Template("event_result.html", **card) %}
 {% end %}
 </ol>

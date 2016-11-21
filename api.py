@@ -24,33 +24,18 @@ ARXIV_ENDPOINT = 'http://arxiv-api.lateral.io'
 #FIXME be consistent: documents or events?
 
 
-def document_to_card(document):
-    # prepare LIP document object for use in tornado template
-    meta = document['meta']
-    authors = meta['authors'].split(', ')
-    author_ids = meta['author_ids'].split(', ')
-    result = dict(id=document['id'], meta=meta, authors=authors,
-                  author_ids=author_ids)
-    if 'similarity' in document:
-        result['similarity'] = document['similarity']
-    return result
-
 
 class APIHandler(tornado.web.RequestHandler):
 
     def initialize(self, api):
         self.api = api
 
-    def get_event(self, event_id):
-        document = self.api.get_document(event_id)
-        return document_to_card(document)
-
     def get_schedule_cards(self, user_id):
         # get preferences for the user
         prefs = self.api.get_users_preferences(user_id)
         event_ids = [pref['document_id'] for pref in prefs]
         # get all the documents, one by one
-        cards = [self.get_event(event_id) for event_id in event_ids]
+        cards = [self.api.get_document(event_id) for event_id in event_ids]
         # TODO sort by start_time_numeric
         return cards
 
@@ -84,8 +69,8 @@ class EventsHandler(UserHandler):
 
     def get(self):
         # get all the events
-        documents = self.api.get_documents()
-        event_cards = [document_to_card(document) for document in documents]
+        keywords = self.get_argument('keywords', None)
+        event_cards = self.api.get_documents(keywords=keywords)
         # get the user's schedule
         schedule_cards = self.get_schedule_cards(self.user_id)
         self.render('events.html',
@@ -97,20 +82,19 @@ class EventsHandler(UserHandler):
 class EventHandler(UserHandler):
 
     def get(self, event_id):
-        event = self.get_event(event_id)
-        # FIXME fetch the tags
-
+        event = self.api.get_document(event_id)
+        tags = self.api.get_documents_tags(event_id)
         # fetch the similar talks
         related_events = self.api.get_documents_similar(
             event_id, fields='meta,text', exclude='[%s]' % event_id,
             number=NUM_RESULTS)
-        related_events = map(document_to_card, related_events)
         # fetch the similar arxiv papers, include them
         related_papers = self.get_related_papers(event['meta']['abstract_text'])
         # get the user's schedule
         schedule_cards = self.get_schedule_cards(self.user_id)
         self.render('event.html',
                     user_id=self.user_id,
+                    tags=tags,
                     schedule_cards=schedule_cards,
                     related_events=related_events,
                     related_papers=related_papers, **event)

@@ -4,7 +4,9 @@
 <h1>Events</h1>
 	<ol>
 	{% for card in event_cards %}
-	{% module Template("card.html", **card) %}
+		<li>
+		{% module Template("event_result.html", **card) %}
+		</li>
 	{% end %}
 	</ol>
 </div>
