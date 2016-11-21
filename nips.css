@@ -13,3 +13,8 @@
 div.cleared {
 	clear: both;
 }
+span.link-like {
+	cursor:pointer;
+	color:blue;
+	text-decoration:underline;
+}

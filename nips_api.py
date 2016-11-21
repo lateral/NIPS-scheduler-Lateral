@@ -115,26 +115,41 @@ class EventHandler(UserHandler):
                     related_events=related_events,
                     related_papers=related_papers, **event)
 
-
     def respond_with_schedule(self):
         # get the user's schedule
         schedule_cards = self.get_schedule_cards(self.user_id)
         self.render('schedule.html',
-                    schedule_cards=schedule_cards,
+                    cards=schedule_cards,
                     user_id=self.user_id)
 
-    def post(self, event_id):
-        # FIXME handle the 500 that is raised when already exists
-        self.api.post_users_preference(self.user_id, event_id)
+
+class AddToScheduleHandler(EventHandler):
+
+    def post(self):
+        event_id = self.get_argument('event_id')
+        try:
+            # handle the 500 response that is raised when already exists (this needs to be fixed in Lateral API)
+            self.api.post_users_preference(self.user_id, event_id)
+        except HTTPError as e:
+            if e.response.status_code != 500:
+                raise e
         self.respond_with_schedule()
 
-    def delete(self, event_id):
-        # FIXME handle 404
-        self.api.delete_users_preference(self.user_id, event_id)
+
+class RemoveFromScheduleHandler(EventHandler):
+
+    def post(self):
+        event_id = self.get_argument('event_id')
+        try:
+            # handle 404 for unknown document quietly
+            self.api.delete_users_preference(self.user_id, event_id)
+        except HTTPError as e:
+            if e.response.status_code != 404:
+                raise e
         self.respond_with_schedule()
 
 
-class ScheduleHandler(APIHandler):
+class PrintableScheduleHandler(APIHandler):
 
     def initialize(self, api):
         self.api = api
@@ -150,7 +165,9 @@ def build_application(key):
     application = tornado.web.Application([
         (r"/{0,1}", EventsHandler, resources),
         (r"/([0-9]+)/{0,1}", EventHandler, resources),
-        (r"/schedule/([A-Za-z-_0-9]+)/{0,1}", ScheduleHandler, resources),
+        (r"/add/{0,1}", AddToScheduleHandler, resources),
+        (r"/remove/{0,1}", RemoveFromScheduleHandler, resources),
+        (r"/schedule/([A-Za-z-_0-9]+)/{0,1}", PrintableScheduleHandler, resources),
         (r"/(.*\.css)", tornado.web.StaticFileHandler, {'path': './'}), # FIXME path
         (r"/(.*\.js)", tornado.web.StaticFileHandler, {'path': './'}), # FIXME path
     ], debug=True) # FIXME remove debug=True for deployment

@@ -3,6 +3,8 @@ body {
 }
 ol.author-list {
 	display: inline;
+	padding: 0px;
+	margin: 0px;
 	list-style: none;
 }
 ol.author-list li {
