@@ -67,6 +67,7 @@ class APIHandler(tornado.web.RequestHandler):
         results = ujson.loads(response.text)
         return results[:NUM_RESULTS]
 
+
 class UserHandler(APIHandler):
 
     def prepare(self):
@@ -76,7 +77,7 @@ class UserHandler(APIHandler):
             user = self.api.post_user()
             self.user_id = user['id']
             # set the cookie to be their user id
-            self.set_cookie(COOKIE_NAME, self.user_id)  # FIXME check expiry in browser
+            self.set_cookie(COOKIE_NAME, self.user_id)
 
 
 class EventsHandler(UserHandler):
@@ -114,23 +115,23 @@ class EventHandler(UserHandler):
                     related_events=related_events,
                     related_papers=related_papers, **event)
 
-    def _respond_schedule(self):
-        """
-        respond with list of event ids preferenced, JSON encoded
-        """
-        prefs = self.api.get_users_preferences(self.user_id)
-        self.set_header(CONTENT_TYPE, APP_JSON)
-        self.write(ujson.dumps(prefs))
+
+    def respond_with_schedule(self):
+        # get the user's schedule
+        schedule_cards = self.get_schedule_cards(self.user_id)
+        self.render('schedule.html',
+                    schedule_cards=schedule_cards,
+                    user_id=self.user_id)
 
     def post(self, event_id):
         # FIXME handle the 500 that is raised when already exists
         self.api.post_users_preference(self.user_id, event_id)
-        self._respond_schedule()
+        self.respond_with_schedule()
 
     def delete(self, event_id):
         # FIXME handle 404
         self.api.delete_users_preference(self.user_id, event_id)
-        self._respond_schedule()
+        self.respond_with_schedule()
 
 
 class ScheduleHandler(APIHandler):
