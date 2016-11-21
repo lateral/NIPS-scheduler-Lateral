@@ -19,6 +19,13 @@ APP_JSON = "application/json"
 #FIXME be consistent: documents or events?
 
 
+def document_to_card(document):
+    # prepare LIP document object for use in tornado template
+    meta = document['meta']
+    authors = meta['authors'].split(', ')
+    author_ids = meta['author_ids'].split(', ')
+    return dict(id=document['id'], meta=meta, authors=authors, author_ids=author_ids)
+
 class APIHandler(tornado.web.RequestHandler):
 
     def initialize(self, api):
@@ -27,11 +34,17 @@ class APIHandler(tornado.web.RequestHandler):
     def get_card(self, event_id):
         response = self.api.get_document(event_id)
         document = ujson.loads(response.text)
-        # prepare LIP document object for use in tornado template
-        meta = document['meta']
-        authors = meta['authors'].split(', ')
-        author_ids = meta['author_ids'].split(', ')
-        return dict(id=document['id'], meta=meta, authors=authors, author_ids=author_ids)
+        return document_to_card(document)
+
+    def get_schedule_cards(self, user_id):
+        # get preferences for the user
+        request = self.api.get_users_preferences(user_id)
+        prefs = ujson.loads(request.text)
+        event_ids = [pref['document_id'] for pref in prefs]
+        # get all the documents, one by one
+        cards = [self.get_card(event_id) for event_id in event_ids]
+        # TODO sort by start_time_numeric
+        return cards
 
 
 class UserHandler(APIHandler):
@@ -50,8 +63,16 @@ class UserHandler(APIHandler):
 class RootHandler(UserHandler):
 
     def get(self):
-        # TODO should be returning all the talks
-        self.write(self.user_id)
+        # get all the events
+        request = self.api.get_documents()
+        documents = ujson.loads(request.text)
+        event_cards = [document_to_card(document) for document in documents]
+        # get the user's schedule
+        schedule_cards = self.get_schedule_cards(self.user_id)
+        self.render('index.html',
+                    schedule_cards=schedule_cards,
+                    event_cards=event_cards,
+                    user_id=self.user_id)
 
 
 class EventHandler(UserHandler):
@@ -88,15 +109,8 @@ class ScheduleHandler(APIHandler):
         self.api = api
 
     def get(self, user_id):
-        # get preferences for the user
-        print user_id
-        request = self.api.get_users_preferences(user_id)
-        prefs = ujson.loads(request.text)
-        event_ids = [pref['document_id'] for pref in prefs]
-        # get all the documents, one by one
-        cards = [self.get_card(event_id) for event_id in event_ids]
-        # TODO sort by start_time_numeric
-        self.render('schedule.html', id=user_id, cards=cards)
+        cards = self.get_schedule_cards(user_id)
+        self.render('schedule.html', user_id=user_id, cards=cards)
 
 
 def build_application(key):
@@ -105,7 +119,9 @@ def build_application(key):
         (r"/{0,1}", RootHandler, resources),
         (r"/events/([0-9]+)/{0,1}", EventHandler, resources),
         (r"/schedule/([A-Za-z-_0-9]+)/{0,1}", ScheduleHandler, resources),
-    ])
+        (r"/(.*\.css)", tornado.web.StaticFileHandler, {'path': './'}), # FIXME path
+        (r"/(.*\.js)", tornado.web.StaticFileHandler, {'path': './'}), # FIXME path
+    ], debug=True) # FIXME remove debug=True for deployment
     return application
 
 HELP_STR = """

@@ -1,0 +1,15 @@
+#wrapper {
+	margin-left: 400px;
+}
+#left-panel {
+	float: left;
+	width: 400px;
+	margin-left: -400px;
+}
+#right-panel {
+	float: right;
+	width: 100%;
+}
+div.cleared {
+	clear: both;
+}

@@ -1,17 +1,23 @@
 <li id="event-{{ id }}">
-	<h2 class="title">{{ meta['title'] }}</h2>
-	<ul class="author-list">
-		{% for author, author_id in zip(authors, author_ids) %}
-		<li>
-			<span class="author" id="author-{{author_id}}">{{ author }}</span>
-		</li>
-		{% end %}
-	</ul>
-	<span class="event_type">{{ meta['event_type'] }}</span>
-	<span class="location">{{ meta['location'] }}</span>
-	<span class="start_time">{{ meta['start_time'] }}</span>
-	<span class="time_str">{{ meta['time_str'] }}</span>
-	<span class="start_time_numeric">{{ meta['start_time_numeric'] }}</span>
-	<div class="abstract">{% raw meta['abstract_html'] %}</div>
-	<a href="{{ meta['url'] }}">original</a>
+
+<h3 class="title">
+	<a href="/events/{{ id }}">{{ meta['title'] }}</a>
+</h3>
+
+<ol class="author-list">
+	{% for author, author_id in zip(authors, author_ids) %}
+	<li>
+		<a href="https://nips.cc/Conferences/2016/Schedule?showSpeaker={{ author_id }}">{{ author }}</a>
+	</li>
+	{% end %}
+</ol>
+<br>
+
+<span class="event_id">{{ id }}</span><br>
+<span class="event_type">{{ meta['event_type'] }}</span><br>
+<span class="location">{{ meta['location'] }}</span><br>
+<span class="start_time">{{ meta['start_time'] }}</span><br>
+<span class="time_str">{{ meta['time_str'] }}</span><br>
+<span class="add-to-schedule">Add</span>
+<span class="remove-from-schedule">Remove</span>
 </li>

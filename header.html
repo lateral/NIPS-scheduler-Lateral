@@ -1,0 +1,12 @@
+<html>
+
+<head>
+	<title>{{ title }}</title>
+	{% for stylesheet in ['/global.css'] + stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
+	{% end %}
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	{% for script in scripts %}
+	<script src="{{ script }}"></script>
+	{% end %}
+</head>
