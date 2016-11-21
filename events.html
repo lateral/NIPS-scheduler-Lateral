@@ -1,4 +1,4 @@
-{% module Template("header.html", title="NIPS scheduler", scripts=['index.js'], stylesheets=['index.css']) %}
+{% module Template("header.html", title="NIPS scheduler", scripts=['nips.js'], stylesheets=['nips.css']) %}
 <body>
 	<div id="wrapper">
 		<div id="left-panel">
@@ -20,6 +20,7 @@
 				</ol>
 			</div>
 			<div id="download-schedule">
+				<a href="/schedule/{{ user_id }}">Download</a>
 			</div>
 			<div class="cleared"></div>
 		</div>

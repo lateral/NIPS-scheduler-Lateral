@@ -1,6 +1,5 @@
 {% module Template("header.html", title="NIPS scheduler", scripts=[], stylesheets=[]) %}
-<h1>Event {{ id }}</h1>
-<span class="title">{{ meta['title'] }}</span>
+<h1 class="title">{{ meta['title'] }}</h1>
 <ol class="author-list">
 	{% for author, author_id in zip(authors, author_ids) %}
 	<li>
@@ -19,11 +18,22 @@
 <span class="add-to-schedule">Add</span>
 <span class="remove-from-schedule">Remove</span>
 
-<h2>Related talks:</h2>
-<ol>
-	{% for card in related_cards %}
-	{% module Template("card.html", **card) %}
-	{% end %}
-</ol>
+<div id="related-talks">
+	<h2>Related talks:</h2>
+	<ol>
+		{% for card in related_events %}
+		{% module Template("card.html", **card) %}
+		{% end %}
+	</ol>
+</div>
+
+<div id="related-arxiv-papers">
+	<h2>Related arXiv papers:</h2>
+	<ol>
+		{% for paper in related_papers %}
+		{% module Template("arxiv_card.html", **paper) %}
+		{% end %}
+	</ol>
+</div>
 
 </html>
