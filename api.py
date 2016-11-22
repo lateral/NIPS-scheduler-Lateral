@@ -21,9 +21,6 @@ NUM_RESULTS = 4
 
 ARXIV_ENDPOINT = 'http://arxiv-api.lateral.io'
 
-#FIXME be consistent: documents or events?
-
-
 
 class APIHandler(tornado.web.RequestHandler):
 
@@ -152,9 +149,8 @@ def build_application(key):
         (r"/add/{0,1}", AddToScheduleHandler, resources),
         (r"/remove/{0,1}", RemoveFromScheduleHandler, resources),
         (r"/schedule/([A-Za-z-_0-9]+)/{0,1}", PrintableScheduleHandler, resources),
-        (r"/(.*\.css)", tornado.web.StaticFileHandler, {'path': './'}), # FIXME path
-        (r"/(.*\.js)", tornado.web.StaticFileHandler, {'path': './'}), # FIXME path
-    ], debug=True) # FIXME remove debug=True for deployment
+        (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': 'static/'}),
+    ], template_path='templates/', debug=True) # FIXME remove debug=True for deployment
     return application
 
 HELP_STR = """
