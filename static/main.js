@@ -1,17 +1,16 @@
 $().ready(function() {
-
-	$('.add-to-schedule').on('click', function() {
-		var event_id = $(this).siblings('.event_id').text();
+	$(document).on('click', '.add-to-schedule', function(event) {
+		var event_id = $(event.target).data('id');
 		$('#schedule').load('/add', {event_id: event_id});
 	});
-	$('.remove-from-schedule').on('click', function() {
-		var event_id = $(this).siblings('.event_id').text();
+	$(document).on('click', '.remove-from-schedule', function(event) {
+		var event_id = $(event.target).data('id');
 		$('#schedule').load('/remove', {event_id: event_id});
 	});
 	$('#search-box').keypress(function(e) {
 	    if(e.which == 13) {
 		var keywords = $(this).val();
-		window.location = '/?keywords=' + keywords;
+		window.location = '/search?keywords=' + keywords;
 	    }
 	});
 });

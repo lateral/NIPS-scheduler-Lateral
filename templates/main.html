@@ -9,7 +9,7 @@
 		<div id="left-panel">
 			<h1>Schedule</h1>
 			<div id="schedule">
-				{% module Template("schedule.html", user_id=user_id, cards=schedule_cards) %}
+				{% module Template("schedule.html", user_id=user_id, items=schedule_items) %}
 			</div>
 			<div id="download-schedule">
 				<a href="/schedule/{{ user_id }}">Download</a>

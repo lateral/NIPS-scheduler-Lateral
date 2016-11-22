@@ -1,9 +1,9 @@
 {% extends "main.html" %}
 {% block main_content %}
 <div id="events">
-<h1>Events</h1>
+	<h1>{{ events_title }}</h1>
 	<ol>
-	{% for card in event_cards %}
+	{% for card in events %}
 		<li>
 		{% module Template("event_result.html", **card) %}
 		</li>

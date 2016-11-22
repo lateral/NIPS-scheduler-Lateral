@@ -10,7 +10,6 @@
 	</ol>
 	<br>
 
-	<span class="event_id">{{ id }}</span><br>
 	<span class="event_type">{{ meta['event_type'] }}</span><br>
 	<span class="location">{{ meta['location'] }}</span><br>
 	<span class="start_time">{{ meta['start_time'] }}</span><br>
@@ -18,6 +17,6 @@
 	{% if globals().get('similarity', False) %}
 	<span class="similarity">Similarity {{ int(similarity * 100) }}% </span><br>
 	{% end %}
-	<span class="link-like add-to-schedule">Add</span>
-	<span class="link-like remove-from-schedule">Remove</span>
+	<span class="link-like add-to-schedule" data-id="{{ id }}">Add</span>
+	<span class="link-like remove-from-schedule" data-id="{{ id }}">Remove</span>
 </div>
