@@ -1,4 +1,50 @@
 #!/usr/bin/env python
+"""
+API calls:
+----------
+All respond with HTML.
+
+/ GET
+Respond with the list of events, unfiltered.
+
+/search/keywords=deep+learning GET
+Respond with the list of events matching the specified keywords.
+
+/tag/Language GET
+Respond with the list of events in the specified category ("tag").
+
+/6216/ GET
+Respond with information about the specified event (the ids are those from the
+NIPS website), including a list of related talks and related arxiv papers.
+
+/schedule/COOKIE_ID GET
+Respond with a printable version of the schedule, the user being specified by
+COOKIE_ID (so that the schedule can be shared).
+
+/add/?event_id=6216 POST
+Add the specifed event to the schedule of the user specified by the cookie
+Responds as per /schedule/ (after making the requested change).
+(response code is always 200).
+
+/remove/?event_id=6216 POST
+Remove the specifed event to the schedule of the user specified by the cookie
+Responds as per /schedule/ (after making the requested change).
+(response code is always 200, even if event not in the users schedule).
+
+/related-arxiv-papers/6216/ GET
+Respond with arXiv papers related to the event number 6216.
+
+/static/FILENAME GET
+Serve whatever static file is specified (i.e. CSS and javascript).
+
+Templates:
+----------
+All page templates are stored in the folder `templates/`.
+Pages that list all events and pages that detail any particular event have a
+two column layout.  This layout is controlled by the template `main.html`,
+which is extended by `events.html` and `event.html` respectively.
+"""
+
 import argparse
 import tornado.ioloop
 import tornado.web
@@ -6,10 +52,13 @@ import tornado.template
 import ujson
 import requests
 import random
+import logging
 
 from requests import HTTPError
 from lateral.api import API
 from argparse import RawTextHelpFormatter
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
 COOKIE_NAME = 'nipsscheduler'
 
@@ -35,7 +84,8 @@ class APIHandler(tornado.web.RequestHandler):
         # get events from the cache
         events = [self.event_cache[event_id] for event_id in event_ids]
         # sort by start_time_numeric
-        events = sorted(events, key=lambda event: event['meta']['start_time_numeric'])
+        events = sorted(events,
+                        key=lambda event: event['meta']['start_time_numeric'])
         return events
 
 
@@ -48,7 +98,7 @@ class RelatedArxivPapersHandler(APIHandler):
         text = self.event_cache[event_id]['text']
         url = ARXIV_ENDPOINT + '/recommend-by-text/'
         payload = ujson.dumps(dict(text=text))
-        headers = { 'subscription-key': self.api.key, CONTENT_TYPE: APP_JSON }
+        headers = {'subscription-key': self.api.key, CONTENT_TYPE: APP_JSON}
         response = requests.request("POST", url, data=payload, headers=headers)
         results = ujson.loads(response.text)[:NUM_RESULTS]
         self.render('arxiv_results.html', papers=results)
@@ -95,7 +145,8 @@ class SearchHandler(EventsHandler):
 
     def get(self):
         keywords = self.get_argument('keywords', '')
-        matches = self.api.get_documents(keywords=keywords, fields='', per_page=NUM_EVENTS)
+        matches = self.api.get_documents(keywords=keywords, fields='',
+                                         per_page=NUM_EVENTS)
         events = [self.event_cache[match['id']] for match in matches]
         title = 'Keywords: ' + keywords
         self.respond_with(title, events)
@@ -134,11 +185,10 @@ class AddToScheduleHandler(EventHandler):
     def post(self):
         event_id = self.get_argument('event_id')
         try:
-            # handle the 500 response that is raised when already exists (this needs to be fixed in Lateral API)
             self.api.post_users_preference(self.user_id, event_id)
         except HTTPError as e:
             print e.request.url
-            if e.response.status_code != 409:
+            if e.response.status_code != 409:  # already added
                 raise e
         self.respond_with_schedule()
 
@@ -164,7 +214,8 @@ class PrintableScheduleHandler(APIHandler):
 
     def get(self, user_id):
         schedule_items = self.get_schedule_items(user_id)
-        self.render('printable_schedule.html', user_id=user_id, items=schedule_items)
+        self.render('printable_schedule.html', user_id=user_id,
+                    items=schedule_items)
 
 
 def build_event_cache(api):
@@ -188,7 +239,7 @@ def build_application(key):
     api = API(key)
     event_cache = build_event_cache(api)
     resources = {'api': api, 'event_cache': event_cache}
-    application = tornado.web.Application([
+    handlers = [
         (r"/{0,1}", EventsHandler, resources),
         (r"/search/{0,1}", SearchHandler, resources),
         (r"/tag/(.*)/{0,1}", TagHandler, resources),
@@ -198,7 +249,12 @@ def build_application(key):
         (r"/related-arxiv-papers/([0-9]+)/{0,1}", RelatedArxivPapersHandler, resources),
         (r"/schedule/([A-Za-z-_0-9]+)/{0,1}", PrintableScheduleHandler, resources),
         (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': 'static/'}),
-    ], template_path='templates/', debug=True) # FIXME remove debug=True for deployment
+    ]
+
+    # FIXME remove debug=True when in production
+    application = tornado.web.Application(handlers,
+                                          template_path='templates/',
+                                          debug=True)
     return application
 
 HELP_STR = """
