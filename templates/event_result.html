@@ -1,4 +1,9 @@
 <div class="event-result">
+	<span class="day">{{ meta['day'] }}</span>
+	
+	<span class="time_str">{{ meta['time_str'] }}</span>
+	<span class="location">{{ meta['location'] }}</span>
+
 	<h3 class="title">
 		<a href="/{{ id }}">{{ meta['title'] }}</a>
 	</h3>
@@ -10,12 +15,9 @@
 	</ol>
 	<br>
 
-	<span class="event_type">{{ meta['event_type'] }}</span><br>
-	<span class="location">{{ meta['location'] }}</span><br>
-	<span class="start_time">{{ meta['start_time'] }}</span><br>
-	<span class="time_str">{{ meta['time_str'] }}</span><br>
+	<span class="event_type">{{ meta['event_type'] }}</span>
 	{% if globals().get('similarity', False) %}
-	<span class="similarity">Similarity {{ int(similarity * 100) }}% </span><br>
+	<span class="similarity">Similarity {{ int(similarity * 100) }}% </span>
 	{% end %}
 	<span class="link-like add-to-schedule" data-id="{{ id }}">Add</span>
 	<span class="link-like remove-from-schedule" data-id="{{ id }}">Remove</span>

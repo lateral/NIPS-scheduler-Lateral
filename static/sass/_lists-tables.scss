@@ -1,0 +1,24 @@
+ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	&.comma-list {
+		display: inline;
+		padding: 0px;
+		margin: 0px;
+		list-style: none;
+	
+		li {
+			display: inline;
+		}
+
+		li:after {
+			content: ", ";
+		}
+
+		li:last-child:after {
+			content: "";
+		}
+	}
+}

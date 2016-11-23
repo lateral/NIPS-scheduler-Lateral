@@ -1,0 +1,47 @@
+header {
+	background-image: url("/static/img/header.jpg");
+	background-size: cover;
+	height: 60px;
+	position: fixed;
+	max-width: 1280px;
+	width: 100%;
+	float: left;
+
+	.logo, .powered-by {
+		color: #fff;
+		position: absolute;
+
+		span {
+			font-weight: 600;
+		}
+	}
+
+	.logo { 
+		font-size: 20px;
+		left: 26px;
+		top: 13px;
+
+		i {
+			font-size: 30px;
+			margin-right: 10px;
+		}
+	}
+
+	.powered-by {
+		right: 26px;
+		top: 24px;
+		font-size: 12px;
+		text-transform: uppercase;
+
+		span {
+			@include transition(margin .3s);
+		}
+
+		&:hover {
+
+			span {
+				margin: 0 0 0 3px;
+			}
+		}
+	}
+}

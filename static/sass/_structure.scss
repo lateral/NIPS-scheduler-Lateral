@@ -1,0 +1,42 @@
+.main {
+
+	#page-wrapper {
+		margin-left: 400px;
+	}
+
+	#left-panel, #right-panel {
+		margin-top: 60px;
+		padding: 20px;
+
+		.wrapper {
+			padding: 10px 20px;
+			max-width: 700px;
+			margin: 0 auto;
+		}
+	}
+
+	#left-panel {
+		background-color: $grey;
+		float: left;
+		height: 100%;
+		margin-left: -400px;
+		position: fixed;
+		width: 340px;
+	}
+
+
+	#right-panel {
+		float: right;
+		width: 100%;
+	}
+
+	div.cleared {
+		clear: both;
+	}
+
+	span.link-like {
+		cursor:pointer;
+		color:blue;
+		text-decoration:underline;
+	}
+}

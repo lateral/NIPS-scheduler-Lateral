@@ -1,0 +1,10 @@
+a {
+	color: $blue;
+	text-decoration: none;
+}
+
+a:visited,
+a:active,
+a:focus {
+	outline: none;
+}

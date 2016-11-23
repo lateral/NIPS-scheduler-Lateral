@@ -129,7 +129,7 @@ class EventsHandler(UserHandler):
 
     def get(self):
         events = random.sample(self.event_cache.values(), NUM_EVENTS)
-        self.respond_with('Events', events)
+        self.respond_with('All events', events)
 
 
 class TagHandler(EventsHandler):
@@ -148,7 +148,7 @@ class SearchHandler(EventsHandler):
         matches = self.api.get_documents(keywords=keywords, fields='',
                                          per_page=NUM_EVENTS)
         events = [self.event_cache[match['id']] for match in matches]
-        title = 'Keywords: ' + keywords
+        title = 'Search: ' + keywords
         self.respond_with(title, events)
 
 

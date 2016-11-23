@@ -1,6 +1,8 @@
 {% module Template("header.html", title="NIPS schedule") %}
-<body class="printable">
+
+<div class="printable">
 	<h1>Schedule</h1>
 	{% module Template("schedule.html", user_id=user_id, items=items) %}
-</body>
-</html>
+</div>
+
+{% module Template("footer.html") %}

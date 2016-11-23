@@ -1,0 +1,66 @@
+// Breakpoints
+
+@mixin bp-large {
+  @media only screen and (max-width: 840px) {
+    @content;
+  }
+}
+
+@mixin bp-medium {
+  @media only screen and (max-width: 640px) {
+    @content;
+  }
+}
+
+@mixin bp-small {
+  @media only screen and (max-width: 375px) {
+    @content;
+  }
+}
+
+// Transitions
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+// Opacity 
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+// Clearfix 
+
+%clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// Transform 
+
+@mixin transform($transforms) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+          transform: $transforms;
+}
+
+// Rotate
+
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
