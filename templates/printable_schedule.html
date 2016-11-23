@@ -1,5 +1,5 @@
-{% module Template("header.html", title="NIPS schedule", scripts=[], stylesheets=['/static/printable_schedule.css']) %}
-<body>
+{% module Template("header.html", title="NIPS schedule") %}
+<body class="printable">
 	<h1>Schedule</h1>
 	{% module Template("schedule.html", user_id=user_id, items=items) %}
 </body>

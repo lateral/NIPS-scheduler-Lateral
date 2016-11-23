@@ -2,11 +2,7 @@
 
 <head>
 	<title>{{ title }}</title>
-	{% for stylesheet in ['/static/global.css'] + stylesheets %}
-	<link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
-	{% end %}
+	<link rel="stylesheet" type="text/css" href="/static/main.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-	{% for script in scripts %}
-	<script src="{{ script }}"></script>
-	{% end %}
+	<script src="/static/main.js"></script>
 </head>

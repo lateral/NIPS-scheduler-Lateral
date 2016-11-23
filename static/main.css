@@ -1,20 +1,2 @@
-#wrapper {
-	margin-left: 400px;
-}
-#left-panel {
-	float: left;
-	width: 400px;
-	margin-left: -400px;
-}
-#right-panel {
-	float: right;
-	width: 100%;
-}
-div.cleared {
-	clear: both;
-}
-span.link-like {
-	cursor:pointer;
-	color:blue;
-	text-decoration:underline;
-}
+body{font-family:"Courier New", Courier, monospace}ol.comma-list{display:inline;padding:0px;margin:0px;list-style:none}ol.comma-list li{display:inline}ol.comma-list li:after{content:", "}ol.comma-list li:last-child:after{content:""}.printable .add-to-schedule,.printable .remove-from-schedule,.printable .start_time,.printable .event_id{display:none}.main #wrapper{margin-left:400px}.main #left-panel{float:left;width:400px;margin-left:-400px}.main #right-panel{float:right;width:100%}.main div.cleared{clear:both}.main span.link-like{cursor:pointer;color:blue;text-decoration:underline}
+/*# sourceMappingURL=main.css.map */
