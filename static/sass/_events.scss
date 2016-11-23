@@ -1,35 +1,80 @@
-.events {
+#events {
 	margin-top: 30px;
 }
 
 .event-result {
+	@include transition (padding .2s);
 	background-color: #fff;
-	border: 1px solid #D4D4D4;
+	border: 1px solid $grey-line;
+	border-left: 5px solid $grey-line;
 	border-radius: 5px;
-	padding: 10px 20px;
+	padding: 10px 60px 10px 20px;
 	position: relative;
 	margin-top: 16px;
 
-	.event_type,
-	.location,
-	.start_time,
+	&:hover {
+		padding: 10px 60px 10px 25px;
+	}
+
+	&.demonstration {
+		border-left: 5px solid $demonstration;
+	}
+
+	&.poster {
+		border-left: 5px solid $poster;
+	}
+
+	&.oral {
+		border-left: 5px solid $oral;
+	}
+
+	&.tutorial {
+		border-left: 5px solid $tutorial;
+	}
+
+	&.workshop {
+		border-left: 5px solid $workshop;
+	}
+
+	&.talk {
+		border-left: 5px solid $talk;
+	}
+
+	.day,
 	.time_str,
-	.start_time_numeric,
-	.abstract,
-	.comma-list {
-		font-size: 12px;
-	}
-
-	.location,
-	.start_time,
-	.time_str {
+	.location {
 		display: inline;
+		margin-right: 5px;
 	}
-
 
 	.event_type {
 		position: absolute;
-		top: 10px;
-		right: 20px;
+		top: 14px;
+		right: 14px;
+	}
+
+	.link-like {
+		@include transition (color .2s);
+		bottom: 12px;
+		font-size: 28px;
+		position: absolute;
+		right: 10px;
+		cursor: pointer;
+		
+		&.add-to-schedule {
+			color: $blue;
+
+			&:hover {
+				color: $blue-hover;
+			}
+		}
+
+		&.remove-from-schedule {
+			color: $green;
+
+			&:hover {
+				color: $green-hover;
+			}
+		}
 	}
 }

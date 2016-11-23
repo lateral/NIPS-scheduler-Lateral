@@ -1,0 +1,35 @@
+#left-panel {
+	.day,
+	.event_type,
+	.location,
+	.start_time,
+	.time_str,
+	.comma-list {
+		display: none;
+	}
+
+	.event-result {
+		padding: 20px 18px;
+	}
+
+	h3 {
+		font-size: 12px;
+		margin: 0;
+		width: 85%;
+		line-height: 16px;
+		padding: 0;
+	}
+}
+
+#download-schedule {
+	position: absolute;
+	bottom: 125px;
+	border-top: 1px solid #ccc;
+	width: 100%;
+	margin-left: -30px;
+	padding-top: 20px;
+
+	i {
+		margin-left: 40px;
+	}
+}

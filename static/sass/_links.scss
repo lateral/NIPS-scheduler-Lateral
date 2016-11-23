@@ -1,6 +1,11 @@
 a {
+	@include transition (color .2s);
 	color: $blue;
 	text-decoration: none;
+
+	&:hover {
+		color: $blue-hover;
+	}
 }
 
 a:visited,

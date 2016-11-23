@@ -1,4 +1,4 @@
-<div class="event-result">
+<div class="event-result {{ meta['event_type'].lower() }}">
 	<span class="day">{{ meta['day'] }}</span>
 	
 	<span class="time_str">{{ meta['time_str'] }}</span>
@@ -13,12 +13,11 @@
 		<li>{{ author }}</li>
 		{% end %}
 	</ol>
-	<br>
 
-	<span class="event_type">{{ meta['event_type'] }}</span>
+	<span class="event_type {{ meta['event_type'].lower() }}">{{ meta['event_type'] }}</span>
 	{% if globals().get('similarity', False) %}
 	<span class="similarity">Similarity {{ int(similarity * 100) }}% </span>
 	{% end %}
-	<span class="link-like add-to-schedule" data-id="{{ id }}">Add</span>
-	<span class="link-like remove-from-schedule" data-id="{{ id }}">Remove</span>
+	<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+<!-- 	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i> -->
 </div>

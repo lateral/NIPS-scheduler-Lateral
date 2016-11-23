@@ -1,13 +1,28 @@
 h1 {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 600;
 }
 
 h3 {
-	font-size: 14px;
-	letter-spacing: .2px;
+	font-size: 15px;
+	letter-spacing: .3px;
+	line-height: 20px;
 }
 
 p {
+	font-size: 13px;
+	letter-spacing: .3px;
+}
+
+.day,
+.event_type,
+.location,
+.start_time,
+.time_str,
+.comma-list {
 	font-size: 12px;
+}
+
+.day {
+	font-weight: 600;
 }

@@ -10,8 +10,18 @@ body {
 // Colours
 
 $blue: #337AB7;
+$blue-hover: #49a8f9;
 $green: #08CE95;
+$green-hover: #0bf1af;
 $grey: #F1F1F1;
+$grey-line: #D4D4D4;
+
+$demonstration: #BCB8EE;
+$oral: #FE9713;
+$poster: #08CE95;
+$talk: #C6D7FE;
+$tutorial: #E7C4CB;
+$workshop: #FEA7E2;
 
 .blue {
 	color: $blue;
@@ -26,8 +36,9 @@ $grey: #F1F1F1;
 @import 'sass/alignments';
 @import 'sass/events';
 @import 'sass/links';
+@import 'sass/lists-tables';
+@import 'sass/my-schedule';
 @import 'sass/page-print';
 @import 'sass/search';
 @import 'sass/structure';
-@import 'sass/lists-tables';
 @import 'sass/typography';

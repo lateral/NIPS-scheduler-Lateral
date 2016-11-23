@@ -6,25 +6,22 @@
 	<li> {{ author }} </li>
 	{% end %}
 </ol>
-<br>
 
 <ol class="comma-list categories">
 	{% for tag in tags %}
 	<li> <a href="/tag/{{ tag['id'] }}">{{ tag['id'].replace('_', ' ') }}</a></li>
 	{% end %}
 </ol>
-<br>
 
+<span class="day">{{ meta['day'] }}</span>
 <span class="event_type">{{ meta['event_type'] }}</span>
 <span class="location">{{ meta['location'] }}</span>
 <span class="start_time">{{ meta['start_time'] }}</span>
 <span class="time_str">{{ meta['time_str'] }}</span>
-<span class="day">{{ meta['day'] }}</span>
-<span class="start_time_numeric">{{ meta['start_time_numeric'] }}</span>
 <span class="abstract">{% raw meta['abstract_html'] %}</span>
 <a href="{{ meta['url'] }}">original</a>
-<span class="link-like add-to-schedule" data-id="{{ id }}">Add</span>
-<span class="link-like remove-from-schedule" data-id="{{ id }}">Remove</span>
+<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
 
 <div id="related-talks">
 	<h2>Related talks:</h2>
