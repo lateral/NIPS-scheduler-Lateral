@@ -50,9 +50,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.template
 import ujson
-import re
 import requests
-import random
 import logging
 
 from requests import HTTPError
@@ -72,7 +70,8 @@ NUM_EVENTS = 50
 
 ARXIV_ENDPOINT = 'http://arxiv-api.lateral.io'
 
-DAYS = ['Monday 5th', 'Tuesday 6th', 'Wednesday 7th', 'Thursday 8th', 'Friday 9th', 'Saturday 10th']
+DAYS = ['Monday 5th', 'Tuesday 6th', 'Wednesday 7th', 'Thursday 8th',
+        'Friday 9th', 'Saturday 10th']
 
 
 class APIHandler(tornado.web.RequestHandler):
@@ -83,12 +82,9 @@ class APIHandler(tornado.web.RequestHandler):
 
     def get_schedule_items(self, user_id):
         # get preferences for the user
-        prefs = self.api.get_users_preferences(user_id)
+        prefs = self.api.get_users_preferences(user_id).json()
         # get events from the cache
         events = self.ids_to_events(prefs, 'document_id')
-        # sort by start_time_numeric
-        events = sorted(events,
-                        key=lambda event: event['meta']['start_time_numeric'])
         # break up by day
         events_by_day = {day: [] for day in DAYS}
         for event in events:
@@ -103,6 +99,9 @@ class APIHandler(tornado.web.RequestHandler):
             if 'similarity' in result:
                 event['similarity'] = result['similarity']
             events.append(event)
+        # sort by start_time_numeric
+        events = sorted(events,
+                        key=lambda event: event['meta']['start_time_numeric'])
         return events
 
 
@@ -127,7 +126,7 @@ class UserHandler(APIHandler):
         self.user_id = self.get_cookie(COOKIE_NAME)
         if not self.user_id:  # never seen user before
             # create a new user in the API
-            user = self.api.post_user()
+            user = self.api.post_user().json()
             self.user_id = user['id']
             # set the cookie to be their user id
             self.set_cookie(COOKIE_NAME, self.user_id, expires_days=COOKIE_DAY_COUNT)
@@ -135,7 +134,7 @@ class UserHandler(APIHandler):
 
 class EventsHandler(UserHandler):
 
-    def respond_with(self, title, events, next_page_uri=None):
+    def respond_with(self, title, events):
         # get the user's schedule
         schedule_items = self.get_schedule_items(self.user_id)
         self.render('events.html',
@@ -143,28 +142,31 @@ class EventsHandler(UserHandler):
                     events=events,
                     days=DAYS,
                     schedule_items=schedule_items,
-                    next_page_uri=next_page_uri,
                     user_id=self.user_id)
 
     def get(self):
-        page_no = int(self.get_argument('page', 1))
-        matches = self.api.get_documents(fields='', per_page=NUM_EVENTS, page=page_no)
-        events = self.ids_to_events(matches, id_field='id')
-        page_uri = re.sub('\?.*$', '', self.request.uri)
-        next_page_uri = page_uri + '?page=%i' % (page_no + 1)
-        self.respond_with('All events', events, next_page_uri=next_page_uri)
+        events = self.ids_to_events(self.event_cache.values(), id_field='id')
+        self.respond_with('All events', events)
 
 
 class TagHandler(EventsHandler):
 
     def get(self, tag):
-        page_no = int(self.get_argument('page', 1))
-        matches = self.api.get_tags_documents(tag, fields='', per_page=NUM_EVENTS, page=page_no)
+        page_no = 1
+        matches = []
+        while True:
+            page = self.api.get_tags_documents(tag,
+                                               fields='',
+                                               per_page=NUM_EVENTS,
+                                               page=page_no).json()
+            if not len(page):
+                 break
+            matches += page
+            page_no += 1
+
         events = self.ids_to_events(matches, id_field='id')
         title = 'Tag: ' + tag.replace('_', ' ')
-        page_uri = re.sub('\?.*$', '', self.request.uri)
-        next_page_uri = page_uri + '?page=%i' % (page_no + 1)
-        self.respond_with(title, events, next_page_uri=next_page_uri)
+        self.respond_with(title, events)
 
 
 class SearchHandler(EventsHandler):
@@ -173,7 +175,7 @@ class SearchHandler(EventsHandler):
         keywords = self.get_argument('keywords', '')
         matches = self.api.get_documents(keywords=keywords, fields='',
                                          keywords_fields='text,meta.authors',
-                                         per_page=NUM_EVENTS)
+                                         per_page=NUM_EVENTS).json()
         events = self.ids_to_events(matches, id_field='id')
         title = 'Search: ' + keywords
         self.respond_with(title, events)
@@ -184,17 +186,17 @@ class EventHandler(UserHandler):
     def get_related_events(self, event_id):
         matches = self.api.get_documents_similar(
             event_id, fields='', exclude='[%s]' % event_id,
-            number=NUM_RESULTS)
+            number=NUM_RESULTS).json()
         events = self.ids_to_events(matches, id_field='id')
         return events
 
     def get(self, event_id):
-        event = self.api.get_document(event_id)
+        event = self.api.get_document(event_id).json()
         # get the user's schedule
         schedule_items = self.get_schedule_items(self.user_id)
         self.render('event.html',
                     user_id=self.user_id,
-                    tags=self.api.get_documents_tags(event_id),
+                    tags=self.api.get_documents_tags(event_id).json(),
                     days=DAYS,
                     schedule_items=schedule_items,
                     related_events=self.get_related_events(event_id),
@@ -251,7 +253,7 @@ def build_event_cache(api):
     events = {}
     page = 1
     while True:
-        results = api.get_documents(page=page, per_page=100)
+        results = api.get_documents(page=page, per_page=100).json()
         if results == []:
             break
         for result in results:
