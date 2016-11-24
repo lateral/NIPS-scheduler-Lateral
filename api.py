@@ -50,6 +50,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.template
 import ujson
+import re
 import requests
 import random
 import logging
@@ -89,6 +90,15 @@ class APIHandler(tornado.web.RequestHandler):
                         key=lambda event: event['meta']['start_time_numeric'])
         return events
 
+    def ids_to_events(self, results, id_field):
+        events = []
+        for result in results:
+            event = dict(self.event_cache[result[id_field]])  # make a copy
+            if 'similarity' in result:
+                event['similarity'] = result['similarity']
+            events.append(event)
+        return events
+
 
 class RelatedArxivPapersHandler(APIHandler):
 
@@ -119,27 +129,35 @@ class UserHandler(APIHandler):
 
 class EventsHandler(UserHandler):
 
-    def respond_with(self, title, events):
+    def respond_with(self, title, events, next_page_uri=None):
         # get the user's schedule
         schedule_items = self.get_schedule_items(self.user_id)
         self.render('events.html',
                     events_title=title,
                     events=events,
                     schedule_items=schedule_items,
+                    next_page_uri=next_page_uri,
                     user_id=self.user_id)
 
     def get(self):
-        events = random.sample(self.event_cache.values(), NUM_EVENTS)
-        self.respond_with('All events', events)
+        page_no = int(self.get_argument('page', 1))
+        matches = self.api.get_documents(fields='', per_page=NUM_EVENTS, page=page_no)
+        events = self.ids_to_events(matches, id_field='id')
+        page_uri = re.sub('\?.*$', '', self.request.uri)
+        next_page_uri = page_uri + '?page=%i' % (page_no + 1)
+        self.respond_with('All events', events, next_page_uri=next_page_uri)
 
 
 class TagHandler(EventsHandler):
 
     def get(self, tag):
-        matches = self.api.get_tags_documents(tag, fields='', per_page=NUM_EVENTS)
-        events = [self.event_cache[match['id']] for match in matches]
+        page_no = int(self.get_argument('page', 1))
+        matches = self.api.get_tags_documents(tag, fields='', per_page=NUM_EVENTS, page=page_no)
+        events = self.ids_to_events(matches, id_field='id')
         title = 'Tag: ' + tag.replace('_', ' ')
-        self.respond_with(title, events)
+        page_uri = re.sub('\?.*$', '', self.request.uri)
+        next_page_uri = page_uri + '?page=%i' % (page_no + 1)
+        self.respond_with(title, events, next_page_uri=next_page_uri)
 
 
 class SearchHandler(EventsHandler):
@@ -149,7 +167,7 @@ class SearchHandler(EventsHandler):
         matches = self.api.get_documents(keywords=keywords, fields='',
                                          keywords_fields='text,meta.authors',
                                          per_page=NUM_EVENTS)
-        events = [self.event_cache[match['id']] for match in matches]
+        events = self.ids_to_events(matches, id_field='id')
         title = 'Search: ' + keywords
         self.respond_with(title, events)
 
@@ -160,7 +178,7 @@ class EventHandler(UserHandler):
         matches = self.api.get_documents_similar(
             event_id, fields='', exclude='[%s]' % event_id,
             number=NUM_RESULTS)
-        events = [self.event_cache[match['id']] for match in matches]
+        events = self.ids_to_events(matches, id_field='id')
         return events
 
     def get(self, event_id):
