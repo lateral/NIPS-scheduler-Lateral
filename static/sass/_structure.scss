@@ -1,11 +1,11 @@
 .main {
 
 	#page-wrapper {
-		margin-left: 400px;
+		position: relative;
+		height:100%;
 	}
 
 	#left-panel, #right-panel {
-		margin-top: 60px;
 		padding: 20px;
 
 		.wrapper {
@@ -17,20 +17,28 @@
 
 	#left-panel {
 		background-color: $grey;
-		float: left;
-		height: 100%;
-		margin-left: -400px;
-		position: fixed;
-		width: 320px;
+		// float: left;
 
-		.add-to-schedule { display: none; }
-		.remove-from-schedule { display: block; }
+		// height: 100%;
+		// margin-left: -400px;
+		position: absolute;
+		width: 320px;
+		left:0;
+		top:60px;
+		bottom:0;
 	}
 
 
 	#right-panel {
-		float: right;
-		width: 100%;
+		// float: right;
+		// width: 100%;
+		// margin-left: 400px;
+		left:400px;
+		top:60px;
+		bottom:0;
+		right:0;
+		position:absolute;
+		overflow:scroll;
 
 		.link-remove {
 			display: none;

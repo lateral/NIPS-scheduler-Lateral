@@ -1,4 +1,15 @@
 #left-panel {
+	
+	.my-schedule {
+		bottom: 0;
+		left: 0;
+		overflow: auto;
+		padding: 20px 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	
 	.day,
 	.event_type,
 	.location,
@@ -23,16 +34,24 @@
 	}
 }
 
+.schedule-day {
+	border-top: 1px solid $grey-line;
+	padding-top: 5px;
+	margin-top: 20px;
+	span {
+		font-size: 12px;
+	}
+
+	.add-to-schedule { display: none; }
+	.remove-from-schedule { display: block; }
+
+}
+	
 #download-schedule {
 	background-color: $grey;
-	position: absolute;
-	bottom: 125px;
 	border-top: 1px solid #ccc;
-	width: 100%;
-	margin-left: -30px;
-	padding-top: 20px;
-
-	i {
-		margin-left: 40px;
-	}
+	bottom: 0;
+	padding: 31px 20px;
+	position: absolute;
+  width: 320px;
 }
