@@ -22,12 +22,20 @@
 		margin-left: -400px;
 		position: fixed;
 		width: 320px;
+
+		.link-like {
+			display: none;
+		}
 	}
 
 
 	#right-panel {
 		float: right;
 		width: 100%;
+
+		.link-remove {
+			display: none;
+		}
 	}
 
 	div.cleared {
