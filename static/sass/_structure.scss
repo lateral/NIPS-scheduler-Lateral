@@ -23,9 +23,8 @@
 		position: fixed;
 		width: 320px;
 
-		.link-like {
-			display: none;
-		}
+		.add-to-schedule { display: none; }
+		.remove-from-schedule { display: block; }
 	}
 
 

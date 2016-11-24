@@ -1,16 +1,16 @@
-<h2>Related arXiv papers:</h2>
 <ol>
 	{% for paper in papers %}
 	<li>
 		<div class="arxiv-result">
+
+			<span class="similarity">Similarity {{ int(paper['similarity'] * 100) }}% </span>
+
 			<h3>
 				<a href="{{ paper['url'] }}">{{ paper['title'] }}</a>
 			</h3>
 
-			<span class="authors">{{ u'; '.join(paper['authors']) }}</span><br>
-			<span class="year">{{ paper['date'].split('-')[0] }}</span><br>
-			<span class="similarity">Similarity {{ int(paper['similarity'] * 100) }}% </span><br>
-			<span class="abstract">{{ paper['text'] }}</span><br>
+			<span class="authors">{{ u'; '.join(paper['authors']) }}</span>
+			<span class="abstract"><p>{{ paper['text'] }}</p></span>
 		</div>
 	</li>
 	{% end %}

@@ -25,6 +25,10 @@
 			border-bottom: 4px solid $oral;
 		}
 
+		&.symposium {
+			border-bottom: 4px solid $symposium;
+		}
+
 		&.tutorial {
 			border-bottom: 4px solid $tutorial;
 		}
@@ -86,47 +90,5 @@
 			display: none;
 			color: $green;
 		}
-	}
-}
-
-.event-single-related {
-	margin: 40px 0 20px;
-
-	h4 {
-		margin-bottom: 22px;
-
-		span {
-			@include transition(color .1s);
-			padding-bottom: 2px; 
-
-			&:first-child {
-				margin-left: 10px;
-			}
-		}
-
-		.related-divider {
-			cursor: default;
-			font-weight: 400;
-			margin: 8px
-		}
-
-		.related-talks {
-			border-bottom: 2px solid $blue;
-		}
-
-		.related-talks,
-		.related-arxiv-papers {
-			color: $blue;
-			cursor: pointer;
-
-			&:hover {
-				color: $blue-hover;
-			}
-		}
-	}
-
-
-	#related-arxiv-papers {
-		display: none;
 	}
 }
