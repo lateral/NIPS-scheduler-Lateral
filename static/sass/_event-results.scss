@@ -58,10 +58,20 @@
 		margin-right: 5px;
 	}
 
-	.event_type {
+	.event-type-similarity {
 		position: absolute;
-		top: 14px;
 		right: 14px;
+		top: 10px;
+	}
+
+	.similarity {
+		color: $green;
+		font-weight: bold;
+		font-size: 12px;
+		margin-left: 5px;
+	}
+
+	.event_type {
 
 		&.demonstration {
 			border-bottom: 2px solid $demonstration;

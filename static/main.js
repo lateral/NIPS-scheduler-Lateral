@@ -18,6 +18,16 @@ $().ready(function() {
 		$(event.target).siblings('.add-to-schedule').fadeIn("fast")
 	});
 
+	// Remove from Schedule - My Schedule
+
+	// $('.schedule-day .event-result').mouseover(function() {
+	// 	$('.schedule-day .event-result .remove-from-schedule').fadeIn()
+	// });
+
+	// $('.schedule-day .event-result').mouseleave(function() {
+	// 	$('.schedule-day .event-result .remove-from-schedule').fadeOut()
+	// });
+
 	// Search
 
 	$('#search-box').keypress(function(e) {

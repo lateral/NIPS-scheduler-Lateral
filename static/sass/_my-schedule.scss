@@ -38,13 +38,29 @@
 	border-top: 1px solid $grey-line;
 	padding-top: 5px;
 	margin-top: 20px;
+
 	span {
 		font-size: 12px;
 	}
 
-	.add-to-schedule { display: none; }
-	.remove-from-schedule { display: block; }
+	.event-result {
 
+		&.show {
+			.remove-from-schedule { 
+				display: block;
+			}
+		}
+	}
+
+	.add-to-schedule { 
+		display: none; 
+	}
+
+	.remove-from-schedule { 
+		display: block; 
+		bottom: auto;
+		top: 10px;
+	}
 }
 	
 #download-schedule {
@@ -53,5 +69,6 @@
 	bottom: 0;
 	padding: 31px 20px;
 	position: absolute;
+	text-align: center;
   width: 320px;
 }

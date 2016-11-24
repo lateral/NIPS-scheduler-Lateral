@@ -11,6 +11,8 @@
 
 			<span class="authors">{{ u'; '.join(paper['authors']) }}</span>
 			<span class="abstract"><p>{{ paper['text'] }}</p></span>
+
+			<a href="{{ paper['url'] }}" class="link-overlay"></a>
 		</div>
 	</li>
 	{% end %}

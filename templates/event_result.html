@@ -1,6 +1,6 @@
 <div class="event-result {{ meta['event_type'].lower() }}">
-	<span class="day">{{ meta['day'] }}</span>
 	
+	<span class="day">{{ meta['day'] }}</span>
 	<span class="time_str">{{ meta['time_str'] }}</span>
 	<span class="location">{{ meta['location'] }}</span>
 
@@ -14,11 +14,17 @@
 		{% end %}
 	</ol>
 
-	<span class="event_type {{ meta['event_type'].lower() }}">{{ meta['event_type'] }}</span>
-	{% if globals().get('similarity', False) %}
-	<span class="similarity">Similarity {{ int(similarity * 100) }}% </span>
-	{% end %}
+	<div class="event-type-similarity">
+
+		<span class="event_type {{ meta['event_type'].lower() }}">{{ meta['event_type'] }}</span>
+
+		{% if globals().get('similarity', False) %}
+		<span class="similarity">Similarity {{ int(similarity * 100) }}% </span>
+		{% end %}
+	</div>
+
 	<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+
 	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
 
 	<a href="/{{ id }}" class="link-overlay"></a>
