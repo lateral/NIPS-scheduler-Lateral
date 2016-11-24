@@ -22,6 +22,10 @@ header {
 		left: 26px;
 		top: 13px;
 
+		&:hover {
+			color: #fff;
+		}
+
 		i {
 			font-size: 30px;
 			margin-right: 10px;

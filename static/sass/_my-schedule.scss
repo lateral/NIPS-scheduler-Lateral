@@ -3,7 +3,6 @@
 	.event_type,
 	.location,
 	.start_time,
-	.time_str,
 	.comma-list {
 		display: none;
 	}
@@ -12,9 +11,13 @@
 		padding: 20px 18px;
 	}
 
+	.time_str {
+		font-weight: 600;
+	}
+
 	h3 {
 		font-size: 12px;
-		margin: 0;
+		margin:  10px 0 0;
 		width: 85%;
 		line-height: 16px;
 		padding: 0;

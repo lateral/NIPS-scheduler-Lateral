@@ -5,7 +5,7 @@
 	<span class="location">{{ meta['location'] }}</span>
 
 	<h3 class="title">
-		<a href="/{{ id }}">{{ meta['title'] }}</a>
+		<a href="/{{ id }}" class="link-article">{{ meta['title'] }}</a>
 	</h3>
 
 	<ol class="comma-list">
@@ -19,5 +19,7 @@
 	<span class="similarity">Similarity {{ int(similarity * 100) }}% </span>
 	{% end %}
 	<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
-<!-- 	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i> -->
+	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+
+	<a href="/{{ id }}" class="link-overlay"></a>
 </div>
