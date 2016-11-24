@@ -1,17 +1,26 @@
 h1 {
 	font-size: 15px;
 	font-weight: 600;
+	letter-spacing: .3px;
 }
 
 h3 {
-	font-size: 15px;
+	font-size: 14px;
 	letter-spacing: .3px;
 	line-height: 20px;
 }
 
+h4 {
+	font-size: 14px;
+	font-weight: 600px;
+	line-height: 18px;
+}
+
 p {
-	font-size: 13px;
+	color: #313131;
+	font-size: 14px;
 	letter-spacing: .3px;
+	line-height: 20px;
 }
 
 .day,
@@ -21,6 +30,7 @@ p {
 .time_str,
 .comma-list {
 	font-size: 12px;
+	letter-spacing: .2px;
 }
 
 .day {

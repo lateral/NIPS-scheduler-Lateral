@@ -1,45 +1,61 @@
 {% extends "main.html" %}
 {% block main_content %}
-<h1 class="title">{{ meta['title'] }}</h1>
-<ol class="comma-list authors">
-	{% for author in meta['authors'].split(', ') %}
-	<li> {{ author }} </li>
-	{% end %}
-</ol>
 
-<ol class="comma-list categories">
-	{% for tag in tags %}
-	<li> <a href="/tag/{{ tag['id'] }}">{{ tag['id'].replace('_', ' ') }}</a></li>
-	{% end %}
-</ol>
+<div class="event-single">
 
-<span class="day">{{ meta['day'] }}</span>
-<span class="event_type">{{ meta['event_type'] }}</span>
-<span class="location">{{ meta['location'] }}</span>
-<span class="time_str">{{ meta['time_str'] }}</span>
-<span class="abstract">{% raw meta['abstract_html'] %}</span>
-<a href="{{ meta['url'] }}">original</a>
-<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
-<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+	<div class="event-meta {{ meta['event_type'].lower() }}">
+		<span class="day">{{ meta['day'] }}</span>
+		<span class="time_str">{{ meta['time_str'] }}</span>
+		<span class="location">{{ meta['location'] }}</span>
+		<span class="event_type">{{ meta['event_type'] }}</span>
+	</div>
 
-<div id="related-talks">
-	<h2>Related talks:</h2>
-	<ol>
-		{% for card in related_events %}
-		<li>
-		{% module Template("event_result.html", **card) %}
-		</li>
+	<h1 class="title">{{ meta['title'] }}</h1>
+	<ol class="comma-list authors">
+		{% for author in meta['authors'].split(', ') %}
+		<li> {{ author }} </li>
 		{% end %}
-	</ol>
-</div>
+	</ol><br>
 
-<div id="related-arxiv-papers">
-</div>
+	<span class="abstract"><p>{% raw meta['abstract_html'] %}</p></span>
 
-<script type="text/javascript">
-	$().ready(function() {
-		$('#related-arxiv-papers').load('/related-arxiv-papers/{{ id }}');
-	});
-</script>
+	<div class="categories">
+		<span>Categories:</span>
+		<ol class="comma-list categories">
+			{% for tag in tags %}
+			<li> <a href="/tag/{{ tag['id'] }}">{{ tag['id'].replace('_', ' ') }}</a></li>
+			{% end %}
+		</ol>
+	</div>
+
+<!-- 	<a href="{{ meta['url'] }}">original</a> -->
+
+	<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+
+	</div>
+
+	<div class="event-single-related">
+
+		<h4>Related: <span class="related-talks">Talks</span><span class="related-divider">|</span><span class="related-arxiv-papers">arXiv papers</span></h4>
+
+		<div id="related-talks">
+			<ol>
+				{% for card in related_events %}
+				<li>
+				{% module Template("event_result.html", **card) %}
+				</li>
+				{% end %}
+			</ol>
+		</div>
+
+		<div id="related-arxiv-papers">
+			<script type="text/javascript">
+				$().ready(function() {
+					$('#related-arxiv-papers').load('/related-arxiv-papers/{{ id }}');
+				});
+			</script>
+		</div>
+	</div>
 
 {% end %}
