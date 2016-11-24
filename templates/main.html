@@ -7,7 +7,7 @@
 			<div class="wrapper">
 				<h1>My Schedule</h1>
 				<div id="schedule">
-					{% module Template("schedule.html", user_id=user_id, items=schedule_items) %}
+					{% module Template("schedule.html", user_id=user_id, items=schedule_items, days=days) %}
 				</div>
 				<div id="download-schedule">
 					<a href="/schedule/{{ user_id }}" target="_blank"><i class="fa fa-download margin-right-5" aria-hidden="true"></i> Save &amp; print your schedule</a>

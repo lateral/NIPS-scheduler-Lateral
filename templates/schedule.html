@@ -1,6 +1,15 @@
 <!-- <span class="user-id">Cookie {{ user_id }}</span> -->
-<ol class="schedule">
-{% for item in items %}
-{% module Template("event_result.html", **item) %}
+{% for day in days %}
+<div class="schedule-day">
+	<h2>{{ day }}</h2>
+	{% if len(items[day]) %}
+		<ol class="schedule">
+		{% for item in items[day] %}
+			{% module Template("event_result.html", **item) %}
+		{% end %}
+		</ol>
+	{% else %}
+		<span class="nothing-yet">Nothing yet.</span>
+	{% end %}
+</div>
 {% end %}
-</ol>

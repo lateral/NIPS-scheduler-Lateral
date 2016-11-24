@@ -72,6 +72,8 @@ NUM_EVENTS = 50
 
 ARXIV_ENDPOINT = 'http://arxiv-api.lateral.io'
 
+DAYS = ['Monday 5th', 'Tuesday 6th', 'Wednesday 7th', 'Thursday 8th', 'Friday 9th', 'Saturday 10th']
+
 
 class APIHandler(tornado.web.RequestHandler):
 
@@ -82,13 +84,17 @@ class APIHandler(tornado.web.RequestHandler):
     def get_schedule_items(self, user_id):
         # get preferences for the user
         prefs = self.api.get_users_preferences(user_id)
-        event_ids = [pref['document_id'] for pref in prefs]
         # get events from the cache
-        events = [self.event_cache[event_id] for event_id in event_ids]
+        events = self.ids_to_events(prefs, 'document_id')
         # sort by start_time_numeric
         events = sorted(events,
                         key=lambda event: event['meta']['start_time_numeric'])
-        return events
+        # break up by day
+        events_by_day = {day: [] for day in DAYS}
+        for event in events:
+            day = event['meta']['day']
+            events_by_day[day].append(event)
+        return events_by_day
 
     def ids_to_events(self, results, id_field):
         events = []
@@ -135,6 +141,7 @@ class EventsHandler(UserHandler):
         self.render('events.html',
                     events_title=title,
                     events=events,
+                    days=DAYS,
                     schedule_items=schedule_items,
                     next_page_uri=next_page_uri,
                     user_id=self.user_id)
@@ -188,6 +195,7 @@ class EventHandler(UserHandler):
         self.render('event.html',
                     user_id=self.user_id,
                     tags=self.api.get_documents_tags(event_id),
+                    days=DAYS,
                     schedule_items=schedule_items,
                     related_events=self.get_related_events(event_id),
                     **event)
@@ -196,6 +204,7 @@ class EventHandler(UserHandler):
         # get the user's schedule
         schedule_items = self.get_schedule_items(self.user_id)
         self.render('schedule.html',
+                    days=DAYS,
                     items=schedule_items,
                     user_id=self.user_id)
 
@@ -228,14 +237,10 @@ class RemoveFromScheduleHandler(EventHandler):
 
 class PrintableScheduleHandler(APIHandler):
 
-    def initialize(self, api, event_cache):
-        self.api = api
-        self.event_cache = event_cache
-
     def get(self, user_id):
         schedule_items = self.get_schedule_items(user_id)
         self.render('printable_schedule.html', user_id=user_id,
-                    items=schedule_items)
+                    items=schedule_items, days=DAYS)
 
 
 def build_event_cache(api):
