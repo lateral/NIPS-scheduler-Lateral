@@ -61,6 +61,7 @@ from argparse import RawTextHelpFormatter
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
 COOKIE_NAME = 'nipsscheduler'
+COOKIE_DAY_COUNT = 120
 
 CONTENT_TYPE = "Content-Type"
 APP_JSON = "application/json"
@@ -113,7 +114,7 @@ class UserHandler(APIHandler):
             user = self.api.post_user()
             self.user_id = user['id']
             # set the cookie to be their user id
-            self.set_cookie(COOKIE_NAME, self.user_id)
+            self.set_cookie(COOKIE_NAME, self.user_id, expires_days=COOKIE_DAY_COUNT)
 
 
 class EventsHandler(UserHandler):
@@ -146,6 +147,7 @@ class SearchHandler(EventsHandler):
     def get(self):
         keywords = self.get_argument('keywords', '')
         matches = self.api.get_documents(keywords=keywords, fields='',
+                                         keywords_fields='text,meta.authors',
                                          per_page=NUM_EVENTS)
         events = [self.event_cache[match['id']] for match in matches]
         title = 'Search: ' + keywords
