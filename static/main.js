@@ -27,6 +27,11 @@ $().ready(function() {
 	    }
 	});
 
+	$('.search-button').click(function() {
+	    var keywords = $('#search-box').val();
+	    window.location = '/search?keywords=' + keywords;
+	});
+
 	// Related content switcher
 
 	$('.event-single-related h4 span').click(function(e) {
