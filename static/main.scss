@@ -19,6 +19,7 @@ $grey-line: #D4D4D4;
 $demonstration: #BCB8EE;
 $oral: #FE9713;
 $poster: #08CE95;
+$symposium: #40E0D0;
 $talk: #C6D7FE;
 $tutorial: #E7C4CB;
 $workshop: #FEA7E2;
@@ -35,7 +36,8 @@ $workshop: #FEA7E2;
 
 @import 'sass/alignments';
 @import 'sass/event-single';
-@import 'sass/events';
+@import 'sass/event-single-related';
+@import 'sass/event-results';
 @import 'sass/links';
 @import 'sass/lists-tables';
 @import 'sass/my-schedule';

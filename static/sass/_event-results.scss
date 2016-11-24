@@ -35,6 +35,10 @@
 		border-left: 5px solid $oral;
 	}
 
+	&.symposium {
+		border-left: 5px solid $symposium;
+	}
+	
 	&.tutorial {
 		border-left: 5px solid $tutorial;
 	}
@@ -58,6 +62,34 @@
 		position: absolute;
 		top: 14px;
 		right: 14px;
+
+		&.demonstration {
+			border-bottom: 2px solid $demonstration;
+		}
+
+		&.poster {
+			border-bottom: 2px solid $poster;
+		}
+
+		&.oral {
+			border-bottom: 2px solid $oral;
+		}
+
+		&.symposium {
+			border-bottom: 2px solid $symposium;
+		}
+
+		&.tutorial {
+			border-bottom: 2px solid $tutorial;
+		}
+
+		&.workshop {
+			border-bottom: 2px solid $workshop;
+		}
+
+		&.talk {
+			border-bottom: 2px solid $talk;
+		}
 	}
 
 	.link-overlay {
@@ -90,10 +122,6 @@
 		&.remove-from-schedule {
 			display: none;
 			color: $green;
-
-			// &:hover {
-			// 	color: $green-hover;
-			// }
 		}
 	}
 }

@@ -37,9 +37,9 @@
 
 	<div class="event-single-related">
 
-		<h4>Related: <span class="related-talks">Talks</span><span class="related-divider">|</span><span class="related-arxiv-papers">arXiv papers</span></h4>
+		<h4>Related: <span class="related-talks show" data-target="related-talks">Talks</span><span class="related-divider">|</span><span class="related-arxiv-papers" data-target="related-arxiv-papers">arXiv papers</span></h4>
 
-		<div id="related-talks">
+		<div class="related-source" id="related-talks">
 			<ol>
 				{% for card in related_events %}
 				<li>
@@ -49,7 +49,7 @@
 			</ol>
 		</div>
 
-		<div id="related-arxiv-papers">
+		<div class="related-source" id="related-arxiv-papers">
 			<script type="text/javascript">
 				$().ready(function() {
 					$('#related-arxiv-papers').load('/related-arxiv-papers/{{ id }}');
