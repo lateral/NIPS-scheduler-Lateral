@@ -5,28 +5,19 @@ $().ready(function() {
 	$(document).on('click', '.add-to-schedule', function(event) {
 		var event_id = $(event.target).data('id');
 		$('#schedule').load('/add', {event_id: event_id});
-		$(event.target).fadeOut("fast")
-		$(event.target).siblings('.remove-from-schedule').fadeIn("fast")
+		$('.event-' + event_id + ' .add-to-schedule').hide();
+		$('.event-' + event_id + ' .remove-from-schedule').fadeIn('fast');
+		$('#right-panel .event-' + event_id + ' .schedule-remove').hide()
 	});
 
 	// Remove from Schedule
 
 	$(document).on('click', '.remove-from-schedule', function(event) {
 		var event_id = $(event.target).data('id');
-		$('#schedule').load('/remove', {event_id: event_id});
-		$(event.target).fadeOut("fast")
-		$(event.target).siblings('.add-to-schedule').fadeIn("fast")
+		$('#schedule').load('/remove', { event_id: event_id });
+		$('.event-' + event_id + ' .remove-from-schedule').hide();
+		$('#right-panel .event-' + event_id + ' .add-to-schedule').fadeIn('fast');
 	});
-
-	// Remove from Schedule - My Schedule
-
-	// $('.schedule-day .event-result').mouseover(function() {
-	// 	$('.schedule-day .event-result .remove-from-schedule').fadeIn()
-	// });
-
-	// $('.schedule-day .event-result').mouseleave(function() {
-	// 	$('.schedule-day .event-result .remove-from-schedule').fadeOut()
-	// });
 
 	// Search
 

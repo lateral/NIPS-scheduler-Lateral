@@ -134,4 +134,21 @@
 			color: $green;
 		}
 	}
+
+	.schedule-remove {
+		@include transition (color .1s);
+		display: none;
+		color: $blue;
+		position: absolute;
+		padding: 10px;
+		top: 0;
+		right: 0;
+		font-size: 13px;
+		z-index: 10;
+		cursor: pointer;
+
+		&:hover {
+			color: $blue-hover;
+		}
+	}
 }

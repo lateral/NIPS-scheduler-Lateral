@@ -1,7 +1,7 @@
 {% extends "main.html" %}
 {% block main_content %}
 
-<div class="event-single">
+<div class="event-single event-{{ id }}">
 
 	<div class="event-meta {{ meta['event_type'].lower() }}">
 		<span class="day">{{ meta['day'] }}</span>

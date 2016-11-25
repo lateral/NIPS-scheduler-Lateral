@@ -1,4 +1,4 @@
-<div class="event-result {{ meta['event_type'].lower() }}">
+<div class="event-result event-{{ id }} {{ meta['event_type'].lower() }}">
 	
 	<span class="day">{{ meta['day'] }}</span>
 	<span class="time_str">{{ meta['time_str'] }}</span>
@@ -26,6 +26,9 @@
 	<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
 
 	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+
+	<i class="fa fa-times schedule-remove remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+
 
 	<a href="/{{ id }}" class="link-overlay"></a>
 </div>

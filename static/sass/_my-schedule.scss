@@ -57,9 +57,11 @@
 	}
 
 	.remove-from-schedule { 
-		display: block; 
-		bottom: auto;
-		top: 10px;
+		display: none;
+	}
+
+	.schedule-remove {
+		display: block;
 	}
 }
 	
