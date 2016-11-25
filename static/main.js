@@ -43,6 +43,14 @@ $().ready(function() {
    	$(this).addClass("show")
 
   });
+
+  $('#search-box').keyup(function() {
+    if($(this).val() != '') {
+      $('button.search-button').removeClass('disabled');
+    } else {
+      $('button.search-button').addClass('disabled');
+    }
+  });
 });
 
 

@@ -22,6 +22,10 @@ button {
 			background-color: $blue-hover;
 		}
 	}
+
+	&.disabled {
+		background-color: #ccc;
+	}
 }
 
 input {

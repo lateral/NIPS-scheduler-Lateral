@@ -15,6 +15,12 @@
 		}
 	}
 
+	.add-to-schedule, 
+	.remove-from-schedule {
+		&.hide { display:none; }
+		&.show { display:inline-block; }
+	}
+
 	#left-panel {
 		background-color: $grey;
 		// float: left;
