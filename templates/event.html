@@ -30,8 +30,8 @@
 
 <!-- 	<a href="{{ meta['url'] }}">original</a> -->
 
-	<i class="fa fa-calendar-plus-o link-like add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
-	<i class="fa fa-calendar-check-o link-like remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+	<i style="display: {{ 'none' if id in scheduled_event_ids else 'inline-block'  }}" class="fa fa-calendar-plus-o add-to-schedule" data-id="{{ id }}" aria-hidden="true"></i>
+	<i style="display: {{ 'none' if id not in scheduled_event_ids else 'inline-block'  }}" class="fa fa-calendar-check-o remove-from-schedule" data-id="{{ id }}" aria-hidden="true"></i>
 
 	</div>
 
@@ -43,7 +43,7 @@
 			<ol>
 				{% for card in related_events %}
 				<li>
-				{% module Template("event_result.html", **card) %}
+				{% module Template("event_result.html", scheduled_event_ids=scheduled_event_ids, **card) %}
 				</li>
 				{% end %}
 			</ol>

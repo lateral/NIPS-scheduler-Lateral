@@ -5,7 +5,7 @@
 	{% if len(items[day]) %}
 		<ol class="schedule">
 		{% for item in items[day] %}
-			{% module Template("event_result.html", **item) %}
+			{% module Template("event_result.html", scheduled_event_ids=scheduled_event_ids, **item) %}
 		{% end %}
 		</ol>
 	{% else %}

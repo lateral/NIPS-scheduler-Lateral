@@ -2,7 +2,7 @@
 
 <div class="printable">
 	<h1>Schedule</h1>
-	{% module Template("schedule.html", user_id=user_id, items=items, days=days) %}
+	{% module Template("schedule.html", scheduled_event_ids=scheduled_event_ids, user_id=user_id, items=items, days=days) %}
 </div>
 
 {% module Template("footer.html") %}

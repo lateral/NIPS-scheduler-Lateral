@@ -5,7 +5,7 @@
 	<ol>
 	{% for card in events %}
 		<li>
-		{% module Template("event_result.html", **card) %}
+		{% module Template("event_result.html", scheduled_event_ids=scheduled_event_ids, **card) %}
 		</li>
 	{% end %}
 	</ol>

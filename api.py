@@ -83,6 +83,7 @@ class APIHandler(tornado.web.RequestHandler):
     def get_schedule_items(self, user_id):
         # get preferences for the user
         prefs = self.api.get_users_preferences(user_id).json()
+        event_ids = set([pref['document_id'] for pref in prefs])
         # get events from the cache
         events = self.ids_to_events(prefs, 'document_id')
         # break up by day
@@ -90,7 +91,7 @@ class APIHandler(tornado.web.RequestHandler):
         for event in events:
             day = event['meta']['day']
             events_by_day[day].append(event)
-        return events_by_day
+        return event_ids, events_by_day
 
     def ids_to_events(self, results, id_field):
         events = []
@@ -131,17 +132,23 @@ class UserHandler(APIHandler):
             # set the cookie to be their user id
             self.set_cookie(COOKIE_NAME, self.user_id, expires_days=COOKIE_DAY_COUNT)
 
+    def get_scheduled_ids(self, user_id):
+        prefs = self.api.get_users_preferences(user_id).json()
+        document_ids = set([pref['document_id'] for pref in prefs])
+        return document_ids
+
 
 class EventsHandler(UserHandler):
 
     def respond_with(self, title, events):
         # get the user's schedule
-        schedule_items = self.get_schedule_items(self.user_id)
+        scheduled_event_ids, schedule_items = self.get_schedule_items(self.user_id)
         self.render('events.html',
                     events_title=title,
                     events=events,
                     days=DAYS,
                     schedule_items=schedule_items,
+                    scheduled_event_ids=scheduled_event_ids,
                     user_id=self.user_id)
 
     def get(self):
@@ -193,21 +200,23 @@ class EventHandler(UserHandler):
     def get(self, event_id):
         event = self.api.get_document(event_id).json()
         # get the user's schedule
-        schedule_items = self.get_schedule_items(self.user_id)
+        scheduled_event_ids, schedule_items = self.get_schedule_items(self.user_id)
         self.render('event.html',
                     user_id=self.user_id,
                     tags=self.api.get_documents_tags(event_id).json(),
                     days=DAYS,
                     schedule_items=schedule_items,
+                    scheduled_event_ids=scheduled_event_ids,
                     related_events=self.get_related_events(event_id),
                     **event)
 
     def respond_with_schedule(self):
         # get the user's schedule
-        schedule_items = self.get_schedule_items(self.user_id)
+        scheduled_event_ids, schedule_items = self.get_schedule_items(self.user_id)
         self.render('schedule.html',
                     days=DAYS,
                     items=schedule_items,
+                    scheduled_event_ids=scheduled_event_ids,
                     user_id=self.user_id)
 
 
@@ -240,8 +249,9 @@ class RemoveFromScheduleHandler(EventHandler):
 class PrintableScheduleHandler(APIHandler):
 
     def get(self, user_id):
-        schedule_items = self.get_schedule_items(user_id)
+        scheduled_event_ids, schedule_items = self.get_schedule_items(user_id)
         self.render('printable_schedule.html', user_id=user_id,
+                    scheduled_event_ids=scheduled_event_ids,
                     items=schedule_items, days=DAYS)
 
 
