@@ -4,8 +4,9 @@
 	.add-to-schedule,
 	.remove-from-schedule,
 	.start_time,
+	.schedule-remove,
 	.event_id {
-		display: none
+		display: none !important;
 	}
 
 }
