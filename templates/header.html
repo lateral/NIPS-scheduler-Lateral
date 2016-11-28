@@ -2,7 +2,11 @@
 
 <head>
 	<title>{{ title }}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{% if title != 'NIPS schedule' %}
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	{% end %}
+
 	<link rel="stylesheet" type="text/css" href="/static/main.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	<script src="/static/main.js"></script>
