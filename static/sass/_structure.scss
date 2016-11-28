@@ -58,6 +58,14 @@
 		.schedule-remove {
 			display: none;
 		}
+
+		.display-mobile {
+			display: none;
+
+			@include mobile {
+				display: inline;
+			}
+		}
 	}
 
 	div.cleared {
