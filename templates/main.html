@@ -15,13 +15,13 @@
 		</div>
 
 		<div id="download-schedule">
-			<a href="/schedule/{{ user_id }}" target="_blank"><i class="fa fa-download margin-right-5" aria-hidden="true"></i> Save &amp; print your schedule</a>
+			<a href="/schedule/{{ user_id }}" target="_blank" onclick="ga('send', 'event', 'My-schedule', 'download', 'download-schedule');"><i class="fa fa-download margin-right-5" aria-hidden="true"></i> Save &amp; print your schedule</a>
 		</div>
 
 		<div id="right-panel">
 			<div class="wrapper">
 				<div class="search">
-					<input type="text" placeholder="Search..." id="search-box"><button class="search-button disabled"><i class="fa fa-search" aria-hidden="true"></i></button>
+					<input type="text" placeholder="Search..." id="search-box" onclick="ga('send', 'event', 'Search', 'input', 'enter-search');"><button class="search-button disabled"><i class="fa fa-search" aria-hidden="true"></i></button>
 				</div>
 				{% block main_content %} {% end %}
 			</div>

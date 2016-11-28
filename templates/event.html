@@ -23,21 +23,21 @@
 		<span>Categories:</span>
 		<ol class="comma-list categories">
 			{% for tag in tags %}
-			<li> <a href="/tag/{{ tag['id'] }}">{{ tag['id'].replace('_', ' ') }}</a></li>
+			<li> <a href="/tag/{{ tag['id'] }}" onclick="ga('send', 'event', 'Talk page', 'click', 'Category {{ tag['id'] }}');">{{ tag['id'].replace('_', ' ') }}</a></li>
 			{% end %}
 		</ol>
 	</div>
 
 <!-- 	<a href="{{ meta['url'] }}">original</a> -->
 
-	<i class="fa fa-calendar-plus-o link-like add-to-schedule {{ 'hide' if id in scheduled_event_ids else 'show'  }}" data-id="{{ id }}" aria-hidden="true"></i>
-	<i class="fa fa-calendar-check-o link-like remove-from-schedule {{ 'hide' if id not in scheduled_event_ids else 'show'  }}" data-id="{{ id }}" aria-hidden="true"></i>
+	<i class="fa fa-calendar-plus-o link-like add-to-schedule {{ 'hide' if id in scheduled_event_ids else 'show'  }}" data-id="{{ id }}" aria-hidden="true" onclick="ga('send', 'event', 'Talk page', 'click', 'Add to schedule');"></i>
+	<i class="fa fa-calendar-check-o link-like remove-from-schedule {{ 'hide' if id not in scheduled_event_ids else 'show'  }}" data-id="{{ id }}" aria-hidden="true" onclick="ga('send', 'event', 'Talk page', 'click', 'Remove from schedule');"></i>
 
 	</div>
 
 	<div class="event-single-related">
 
-		<h4>Related: <span class="related-talks show" data-target="related-talks">Talks</span><span class="related-divider">|</span><span class="related-arxiv-papers" data-target="related-arxiv-papers">arXiv papers</span></h4>
+		<h4>Related: <span class="related-talks show" data-target="related-talks">Talks</span><span class="related-divider">|</span><span class="related-arxiv-papers" data-target="related-arxiv-papers" onclick="ga('send', 'event', 'Talk page', 'click', 'See related arXiv papers');">arXiv papers</span></h4>
 
 		<div class="related-source" id="related-talks">
 			<ol>

@@ -12,7 +12,7 @@
 			<span class="authors">{{ u'; '.join(paper['authors']) }}</span>
 			<span class="abstract"><p>{{ paper['text'] }}</p></span>
 
-			<a href="{{ paper['url'] }}" class="link-overlay"></a>
+			<a href="{{ paper['url'] }}" class="link-overlay" onclick="ga('send', 'event', 'Talk page', 'click', 'Open arXiv paper');"></a>
 		</div>
 	</li>
 	{% end %}
