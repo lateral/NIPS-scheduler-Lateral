@@ -10,17 +10,30 @@ header {
 
 	.logo, .powered-by {
 		color: #fff;
-		position: absolute;
 
 		span {
 			font-weight: 600;
 		}
+
+		.hide-mobile {
+			font-weight: 400;
+
+			@include mobile {
+				display: none;
+			}
+		}
 	}
 
-	.logo { 
+	a.logo { 
+		display: block;
 		font-size: 20px;
-		left: 26px;
-		top: 13px;
+		margin: 12px 0 0 20px;
+
+		@include mobile {
+			font-size: 16px;
+			margin: 17px auto 0;
+			text-align: center;
+		}
 
 		&:hover {
 			color: #fff;
@@ -29,14 +42,27 @@ header {
 		i {
 			font-size: 30px;
 			margin-right: 10px;
+			vertical-align: bottom;
+
+			@include mobile {
+				font-size: 26px;
+			}
+		}
+
+		p {
+			color: #fff;
+			display: inline;
+			font-size: 20px;
+			line-height: 28px;
 		}
 	}
 
 	.powered-by {
-		right: 26px;
-		top: 24px;
 		font-size: 12px;
+		position: absolute;
+		right: 26px;
 		text-transform: uppercase;
+		top: 24px;
 
 		@include mobile {
 			display: none;
