@@ -10,7 +10,6 @@ button {
 		background-color: $blue;
 		border-radius: 0 100px 100px 0;
 		height: 44px;
-		padding: 14px 46px;
 		width: 20%;
 
 		i {
@@ -25,6 +24,10 @@ button {
 
 	&.disabled {
 		background-color: #ccc;
+
+		&:hover {
+			background-color: #ccc;
+		}
 	}
 }
 

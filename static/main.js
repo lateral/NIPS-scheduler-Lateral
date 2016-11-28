@@ -51,6 +51,24 @@ $().ready(function() {
       $('button.search-button').addClass('disabled');
     }
   });
+
+  // Mobile Switcher 
+
+  $('.switcher .left').click(function() {
+	  $('#right-panel').fadeOut()
+	  $('.switcher .right p').addClass("show")
+	  $('#left-panel').fadeIn()
+	  $('#download-schedule').fadeIn()
+	  $('.switcher .left p').addClass("show")
+	});
+
+	$('.switcher .right').click(function() {
+	  $('#left-panel').fadeOut()
+	  $('#download-schedule').fadeOut()
+	  $('.switcher .left p').removeClass("show")
+	  $('#right-panel').fadeIn()
+	  $('.switcher .right p').removeClass("show")
+	});
 });
 
 

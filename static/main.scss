@@ -32,6 +32,7 @@ $workshop: #FEA7E2;
 
 @import 'sass/mixins';
 
+@import 'sass/footer';
 @import 'sass/header';
 
 @import 'sass/alignments';
@@ -44,4 +45,5 @@ $workshop: #FEA7E2;
 @import 'sass/page-print';
 @import 'sass/search';
 @import 'sass/structure';
+@import 'sass/switcher';
 @import 'sass/typography';

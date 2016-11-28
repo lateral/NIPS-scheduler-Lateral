@@ -8,6 +8,10 @@
 		position: absolute;
 		right: 0;
 		top: 0;
+
+		@include mobile {
+			padding: 20px 20px 116px;
+		}
 	}
 	
 	.day,
@@ -73,4 +77,10 @@
 	position: absolute;
 	text-align: center;
   width: 320px;
+
+  @include mobile {
+  	display: none;
+  	padding: 20px 0 55px;
+  	width: 100%;
+  }
 }

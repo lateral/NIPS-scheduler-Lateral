@@ -38,6 +38,10 @@ header {
 		font-size: 12px;
 		text-transform: uppercase;
 
+		@include mobile {
+			display: none;
+		}
+
 		&:hover {
 			color: #fff;
 		}

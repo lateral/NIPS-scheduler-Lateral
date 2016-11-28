@@ -1,0 +1,51 @@
+.switcher {
+	display: none;
+	margin-top: 60px;
+
+	@include mobile {
+		display: block;
+		position: fixed;
+		width: 100%;
+    z-index: 100;
+
+		.left, .right {
+			height: 40px;
+			position: absolute;
+			text-align: center;
+			width: 50%;
+			font-weight: 600;
+			margin: 0;
+			cursor: pointer;
+
+			p {
+				color: $blue;
+				display: inline-block;
+				font-weight: 600;
+				margin: 12px 0 0;
+			}
+		}
+
+		.left {
+			background-color: $grey;
+			left: 0;
+
+			p {
+				&.show {
+					border-bottom: 2px solid $blue;
+				}
+			}
+		}
+
+		.right {
+			right: 0;
+
+			p {
+				border-bottom: 2px solid $blue;
+
+				&.show {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}

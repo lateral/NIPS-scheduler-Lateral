@@ -1,18 +1,18 @@
 // Breakpoints
 
-@mixin bp-large {
+@mixin tablet {
   @media only screen and (max-width: 840px) {
     @content;
   }
 }
 
-@mixin bp-medium {
+@mixin mobile {
   @media only screen and (max-width: 640px) {
     @content;
   }
 }
 
-@mixin bp-small {
+@mixin small {
   @media only screen and (max-width: 375px) {
     @content;
   }
