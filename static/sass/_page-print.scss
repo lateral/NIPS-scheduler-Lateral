@@ -1,12 +1,79 @@
 .printable {
-	padding: 100px 40px;
+	padding: 70px 40px;
+
+	h1 {
+		font-size: 12px;
+		margin: 0;
+	}
+
+	h2 {
+		font-size: 12px;
+		margin: 0;
+	}
+
+	.schedule-day {
+		margin-top: 10px;
+
+		h2, span {
+			display: inline;
+		}
+
+		h2 {
+			margin-right: 10px;
+		}
+	}
+
+	.schedule {
+		margin-top: 10px;
+	}
+
+	.tick-box {
+		display: block;
+	}
+
+	.event-result {
+		margin-top: -1px;
+		padding: 3px 60px 5px 10px;
+	}
 
 	.add-to-schedule,
 	.remove-from-schedule,
 	.start_time,
 	.schedule-remove,
-	.event_id {
+	.event_id,
+	.day {
 		display: none !important;
+	}
+
+	.time_str {
+		font-weight: 600;
+	}
+
+	.title {
+		font-size: 12px;
+		line-height: 14px;
+    padding: 5px 0 1px;
+    margin: 0;
+		width: 92%;
+	}
+
+	.comma-list {
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		max-width: 50%;
+		overflow: hidden;
+		height: 16px;
+		text-align: right;
+
+		li {
+			font-size: 12px;
+		}
+	}
+
+	.event-type-similarity {
+		right: 10px;
+		top: 26px;
 	}
 
 }

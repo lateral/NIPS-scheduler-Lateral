@@ -13,6 +13,17 @@
 	position: relative;
 	margin-top: 16px;
 
+	.tick-box {
+		border-radius: 2px;
+		border: 1px solid $grey-line;
+		display: none;
+		height: 10px;
+		left: -30px;
+		position: absolute;
+		top: 18px;
+		width: 10px;
+	}
+
 	h3 {
 		@include transition (all .2s);
 	}
