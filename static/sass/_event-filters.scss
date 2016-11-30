@@ -1,0 +1,74 @@
+#filters {
+  margin-top: 20px;
+  @extend .clearfix;
+  display: inline-block;
+  float: right;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.select-style, .reset-filters {
+  float: left;
+  margin-left: 10px;
+}
+
+.select-style {
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+  width: 135px;
+  height: 27px;
+
+  background-image: url("/static/img/down-arrow.png");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 8px 4px;
+
+  font-family: Lato-Regular;
+  font-size: 12px;
+  color: #337AB7;
+}
+
+.select-style select {
+  // padding: 5px 8px;
+  width: 130%;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  appearance: none;
+
+  font-family: Lato-Regular;
+  font-size: 12px;
+  color: #337AB7;
+  height: 27px;
+  line-height: 27px;
+}
+
+.select-style select:focus {
+  outline: none;
+}
+
+.reset-filters {
+  cursor: pointer;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  width: 135px;
+  height: 27px;
+  font-family: Lato-Regular;
+  font-size: 12px;
+  color: #337AB7;
+  height: 27px;
+  line-height: 27px;
+  padding-left: 8px;
+
+  i {
+    line-height: 27px;
+    float: right;
+    margin-right: 6px;
+    font-size: 11px;
+  }
+}

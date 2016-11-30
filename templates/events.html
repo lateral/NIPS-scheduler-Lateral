@@ -1,5 +1,31 @@
 {% extends "main.html" %}
 {% block main_content %}
+<div id="filters">
+  <div class="select-style" id="filter-date">
+    <select>
+      <option value="all">Filter by date: All</option>
+      <option value="Monday_5th">Monday 5th</option>
+      <option value="Tuesday_6th">Tuesday 6th</option>
+      <option value="Wednesday_7th">Wednesday 7th</option>
+      <option value="Thursday_8th">Thursday 8th</option>
+      <option value="Friday_9th">Friday 9th</option>
+      <option value="Saturday_10th">Saturday 10th</option>
+    </select>
+  </div>
+  <div class="select-style" id="filter-type">
+    <select>
+      <option value="all">Filter by type: All</option>
+      <option value="demonstration">Demonstration</option>
+      <option value="oral">Oral</option>
+      <option value="poster">Poster</option>
+      <option value="symposium">Symposium</option>
+      <option value="talk">Talk</option>
+      <option value="tutorial">Tutorial</option>
+      <option value="workshop">Workshop</option>
+    </select>
+  </div>
+  <div class="reset-filters">Reset filters <i class="fa fa-times" aria-hidden="true"></i></div>
+</div>
 <div id="events">
 	<h1>{{ events_title }}</h1>
 	<ol>
@@ -10,4 +36,5 @@
 	{% end %}
 	</ol>
 </div>
+<div class="no-events">No events matching these filters</div>
 {% end %}

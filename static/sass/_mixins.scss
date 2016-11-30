@@ -28,7 +28,7 @@
   transition: $args;
 }
 
-// Opacity 
+// Opacity
 
 @mixin opacity($opacity) {
   opacity: $opacity;
@@ -36,20 +36,17 @@
   filter: alpha(opacity=$opacity-ie); //IE8
 }
 
-// Clearfix 
+// Clearfix
 
-%clearfix {
-  *zoom: 1;
-  &:before, &:after {
-    content: " ";
-    display: table;
-  }
+.clearfix {
   &:after {
+    content: "";
+    display: table;
     clear: both;
   }
 }
 
-// Transform 
+// Transform
 
 @mixin transform($transforms) {
 	   -moz-transform: $transforms;
