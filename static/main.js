@@ -73,7 +73,6 @@ $(function() {
   // Date filter
   function getHash() {
     var hash = window.location.hash.replace(/^#!/, '').split('&');
-    console.log(hash)
     if (hash.length == 1) {
       window.location.hash = '#!date=all&type=all';
       hash = window.location.hash.replace(/^#!/, '').split('&');
