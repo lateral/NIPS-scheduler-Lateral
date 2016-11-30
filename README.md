@@ -6,7 +6,7 @@ Data was scraped from the NIPS website and pushed into the Lateral API.  Events 
 
 ## Required packages
 
- - `apiwrappy` : a Python client library for the Lateral API (FIXME release, add link).
+ - [`lateral.py`](https://github.com/lateral/lateral.py) : a Python client library for the Lateral API.
  - `requests` : for making API requests directly.
  - `tornado` : the web server.
 
