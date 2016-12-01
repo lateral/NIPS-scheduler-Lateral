@@ -74,7 +74,8 @@ $(function() {
   function getHash() {
     var hash = window.location.hash.replace(/^#!/, '').split('&');
     if (hash.length == 1) {
-      window.location.hash = '#!date=all&type=all';
+      // window.location.hash = '#!date=all&type=all';
+      history.replaceState(undefined, undefined, "#!date=all&type=all")
       hash = window.location.hash.replace(/^#!/, '').split('&');
     }
     return [hash[0].replace('date=', ''), hash[1].replace('type=', '')];
