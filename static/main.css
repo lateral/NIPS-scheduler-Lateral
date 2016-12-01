@@ -504,13 +504,20 @@ ol {
   padding: 31px 20px;
   position: absolute;
   text-align: center;
-  width: 320px; }
+  width: 320px;
+  z-index: 99999999; }
   @media only screen and (max-width: 640px) {
     #download-schedule {
       display: none;
       padding: 20px 0 55px;
       width: 100%; } }
 
+@media print {
+  header {
+    position: static; }
+
+  .event-result {
+    page-break-inside: avoid; } }
 .printable {
   padding: 70px 40px; }
   .printable h1 {

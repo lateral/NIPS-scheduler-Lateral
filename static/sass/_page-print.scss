@@ -1,3 +1,12 @@
+@media print {
+  header {
+    position: static;
+  }
+  .event-result {
+    page-break-inside: avoid;
+  }
+}
+
 .printable {
 	padding: 70px 40px;
 
