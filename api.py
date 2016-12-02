@@ -37,6 +37,9 @@ Respond with arXiv papers related to the event number 6216.
 /static/FILENAME GET
 Serve whatever static file is specified (i.e. CSS and javascript).
 
+/shutdown/<KEY> GET
+Shutdowns the API.  KEY must be the read/write key supplied at API startup.
+
 Templates:
 ----------
 All page templates are stored in the folder `templates/`.
@@ -72,6 +75,15 @@ ARXIV_ENDPOINT = 'http://arxiv-api.lateral.io'
 
 DAYS = ['Monday 5th', 'Tuesday 6th', 'Wednesday 7th', 'Thursday 8th',
         'Friday 9th', 'Saturday 10th']
+
+
+class ShutdownHandler(tornado.web.RequestHandler):
+    """
+    Stops the current IO loop, which terminates the tornado Application.
+    """
+
+    def get(self):
+        tornado.ioloop.IOLoop.current().stop()
 
 
 class APIHandler(tornado.web.RequestHandler):
@@ -227,7 +239,6 @@ class AddToScheduleHandler(EventHandler):
         try:
             self.api.post_users_preference(self.user_id, event_id)
         except HTTPError as e:
-            print e.request.url
             if e.response.status_code != 409:  # already added
                 raise e
         self.respond_with_schedule()
@@ -278,6 +289,7 @@ def build_application(key):
     resources = {'api': api, 'event_cache': event_cache}
     handlers = [
         (r"/{0,1}", EventsHandler, resources),
+        (r"/shutdown/%s/{0,1}" % key, ShutdownHandler, {}),
         (r"/search/{0,1}", SearchHandler, resources),
         (r"/tag/(.*)/{0,1}", TagHandler, resources),
         (r"/([0-9]+)/{0,1}", EventHandler, resources),
@@ -288,10 +300,8 @@ def build_application(key):
         (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': 'static/'}),
     ]
 
-    # FIXME remove debug=True when in production
     application = tornado.web.Application(handlers,
-                                          template_path='templates/',
-                                          debug=True)
+                                          template_path='templates/')
     return application
 
 HELP_STR = """
